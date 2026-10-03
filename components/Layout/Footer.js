@@ -58,7 +58,7 @@ const Footer = () => {
       </div>
       <div className="max-w-screen-xl w-full mx-auto mt-8 px-6 sm:px-8 lg:px-16">
         <p className="border-t border-gray-100 pt-6 text-sm text-gray-400 text-center">
-          Copyright © 2022 |{" "}
+          Copyright © 2026 |{" "}
           <strong >JR Enterprises</strong>{" "}
           | All Rights Reserved
         </p>

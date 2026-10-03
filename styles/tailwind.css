@@ -27,7 +27,7 @@ p {
 }
 
 li.custom-list:before {
-  content: "\2022"; /* bullet point, for screen readers */
+  content: "\2026"; /* bullet point, for screen readers */
   text-indent: -9999999px; /* move the bullet point out of sight */
 
   width: 0.4em;
