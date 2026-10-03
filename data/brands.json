@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Shako",
+    "image": "/assets/brands/shako.png",
+    "width": 400,
+    "height": 120,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "CDC Pneumatics",
+    "image": "/assets/brands/cdc-pneumatics.png",
+    "width": 346,
+    "height": 184,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "QITE",
+    "image": "/assets/brands/qite.png",
+    "width": 400,
+    "height": 238,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Metal Work Pneumatic",
+    "image": "/assets/brands/metal-work.svg",
+    "width": 158,
+    "height": 80,
+    "source": "https://www.metalwork.it/immagini_layout/loghi/METALWORK-logo.svg"
+  },
+  {
+    "name": "Rexroth",
+    "image": "/assets/brands/rexroth.png",
+    "width": 310,
+    "height": 122,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Camozzi",
+    "image": "/assets/brands/camozzi.png",
+    "width": 302,
+    "height": 96,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "SMC",
+    "image": "/assets/brands/smc.png",
+    "width": 294,
+    "height": 120,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Spirax Sarco",
+    "image": "/assets/brands/spirax-sarco.png",
+    "width": 306,
+    "height": 134,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "ASCO Numatics",
+    "image": "/assets/brands/asco-numatics.png",
+    "width": 286,
+    "height": 124,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Parker",
+    "image": "/assets/brands/parker.png",
+    "width": 322,
+    "height": 124,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Norgren",
+    "image": "/assets/brands/norgren.png",
+    "width": 322,
+    "height": 110,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Festo",
+    "image": "/assets/brands/festo.svg",
+    "width": 1024,
+    "height": 192,
+    "source": "https://commons.wikimedia.org/wiki/File:Festo_logo.svg"
+  },
+  {
+    "name": "Bosch",
+    "image": "/assets/brands/bosch.svg",
+    "width": 433,
+    "height": 97,
+    "source": "https://www.bosch.com/"
+  },
+  {
+    "name": "KITZ",
+    "image": "/assets/brands/kitz.png",
+    "width": 272,
+    "height": 92,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "GALA",
+    "image": "/assets/brands/gala.png",
+    "width": 3925,
+    "height": 625,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "Dwyer",
+    "image": "/assets/brands/dwyer.png",
+    "width": 260,
+    "height": 120,
+    "source": "User-provided logo"
+  },
+  {
+    "name": "WIKA",
+    "image": "/assets/brands/wika.svg",
+    "width": 454,
+    "height": 157,
+    "source": "https://commons.wikimedia.org/wiki/File:WIKA_Logo.svg"
+  }
+]

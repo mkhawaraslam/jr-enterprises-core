@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import ButtonPrimary from "./misc/ButtonPrimary";
 import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
+import LogoMarquee from "./misc/LogoMarquee";
 
 const clients = [
   {
@@ -64,42 +65,6 @@ const clients = [
   },
 ];
 
-const logoGroupClassName = "m-0 flex min-w-[100vw] shrink-0 list-none justify-around gap-4 py-2 pr-4 sm:gap-6 sm:pr-6";
-const logoItemClassName = "min-w-0 w-40 flex-none sm:w-48 motion-reduce:w-auto sm:motion-reduce:w-auto";
-
-const ClientLogo = ({ client, duplicate = false }) => {
-  const [imageFailed, setImageFailed] = useState(false);
-  const isLink = Boolean(client.website) && !duplicate;
-  const Component = isLink ? "a" : "div";
-
-  return (
-    <Component
-      href={isLink ? client.website : undefined}
-      target={isLink ? "_blank" : undefined}
-      rel={isLink ? "noopener noreferrer" : undefined}
-      aria-label={isLink ? client.name + " website (opens in a new tab)" : undefined}
-      className="group flex min-h-[7rem] items-center justify-center px-2 py-4 text-black-500 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-    >
-      <div className="flex h-20 w-full items-center justify-center overflow-hidden transition-transform duration-300 ease-in-out motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none">
-        {imageFailed ? (
-          <span className="max-w-full text-sm font-medium [overflow-wrap:anywhere]">{client.name}</span>
-        ) : (
-          <img
-            src={client.image}
-            alt={duplicate ? "" : client.name}
-            width={client.width}
-            height={client.height}
-            loading="eager"
-            decoding="async"
-            className={"block w-auto object-contain " + (client.imageClassName || "h-16 max-w-full")}
-            onError={() => setImageFailed(true)}
-          />
-        )}
-      </div>
-    </Component>
-  );
-};
-
 const Testimonials = () => {
   return (
     <section className="bg-white-500 w-full py-14" id="testimoni" aria-labelledby="testimonials-heading">
@@ -113,27 +78,7 @@ const Testimonials = () => {
         </ScrollAnimationWrapper>
       </div>
       <ScrollAnimationWrapper className="min-w-0 w-full mt-10 py-6 bg-white-500 text-center">
-        <div className="w-full overflow-hidden [&:hover>div]:[animation-play-state:paused]">
-          <div className="flex w-max animate-client-logos-scroll motion-reduce:block motion-reduce:w-full motion-reduce:animate-none" dir="ltr">
-            <ul
-              className={logoGroupClassName + " motion-reduce:grid motion-reduce:min-w-0 motion-reduce:grid-cols-2 motion-reduce:pr-0 sm:motion-reduce:pr-0 lg:motion-reduce:grid-cols-4"}
-              aria-label="Our clients"
-            >
-              {clients.map((client) => (
-                <li key={client.name} className={logoItemClassName}>
-                  <ClientLogo client={client} />
-                </li>
-              ))}
-            </ul>
-            <ul className={logoGroupClassName + " motion-reduce:hidden"} aria-hidden="true">
-              {clients.map((client) => (
-                <li key={client.name} className={logoItemClassName}>
-                  <ClientLogo client={client} duplicate />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <LogoMarquee items={clients} ariaLabel="Our clients" />
       </ScrollAnimationWrapper>
       <div className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto w-full text-center">
         <ScrollAnimationWrapper className="relative z-10 w-full mt-16 -mb-44">

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
+import Brands from "./Brands";
 import productCollections from "../data/productCollections.json";
 
 const ProductCollection = ({ collection, index }) => (
@@ -32,30 +33,33 @@ const Feature = () => (
   <section
     id="feature"
     aria-labelledby="catalog-heading"
-    className="bg-white-300 py-12 sm:py-16 scroll-mt-24"
+    className="scroll-mt-24"
   >
-    <div className="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-16">
-      <ScrollAnimationWrapper className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
-        <h2
-          id="catalog-heading"
-          className="text-3xl lg:text-4xl font-medium leading-tight text-black-600"
-        >
-          Our <span className="text-primary">Product</span>
-        </h2>
-        <p className="text-sm text-black-500">
-          {productCollections.length} collections
-        </p>
-      </ScrollAnimationWrapper>
+    <Brands />
+    <div className="bg-white-300 py-12 sm:py-16">
+      <div className="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-16">
+        <ScrollAnimationWrapper className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
+          <h2
+            id="catalog-heading"
+            className="text-3xl lg:text-4xl font-medium leading-tight text-black-600"
+          >
+            Our <span className="text-primary">Product</span>
+          </h2>
+          <p className="text-sm text-black-500">
+            {productCollections.length} collections
+          </p>
+        </ScrollAnimationWrapper>
 
-      <ul
-        id="catalog-products"
-        aria-label="Product collections"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
-      >
-        {productCollections.map((collection, index) => (
-          <ProductCollection key={collection.id} collection={collection} index={index} />
-        ))}
-      </ul>
+        <ul
+          id="catalog-products"
+          aria-label="Product collections"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+        >
+          {productCollections.map((collection, index) => (
+            <ProductCollection key={collection.id} collection={collection} index={index} />
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 );
