@@ -34,9 +34,6 @@ const Footer = () => {
               <a href="https://themewagon.com/themes/LaslesVPN-nextjs">Download</a>{" "}
             </li>
             <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Pricing{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
               Locations{" "}
             </li>
             <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">

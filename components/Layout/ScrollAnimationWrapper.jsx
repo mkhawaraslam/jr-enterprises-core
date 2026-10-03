@@ -1,15 +1,32 @@
-import {motion} from "framer-motion";
+import { useMemo } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import getScrollAnimation from "../../utils/getScrollAnimation";
 
-export default function ScrollAnimationWrapper({children, className, ...props}) {
+export default function ScrollAnimationWrapper({
+  as = "div",
+  children,
+  className,
+  viewport,
+  ...props
+}) {
+  const reducedMotion = useReducedMotion();
+  const scrollAnimation = useMemo(
+    () => getScrollAnimation(reducedMotion),
+    [reducedMotion]
+  );
+  const Component = motion[as];
+
   return (
-    <motion.div
-      initial="offscreen"
+    <Component
+      initial={reducedMotion ? false : "offscreen"}
+      animate={reducedMotion ? "onscreen" : undefined}
       whileInView="onscreen"
-      viewport={{ once: true, amount: 0.8 }}
+      variants={scrollAnimation}
+      viewport={{ once: true, amount: 0.2, ...viewport }}
       className={className}
       {...props}
     >
       {children}
-    </motion.div>
-  )
+    </Component>
+  );
 }
