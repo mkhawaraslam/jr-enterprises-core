@@ -4,18 +4,18 @@ import { useRouter } from "next/router";
 
 // Default value for some meta data
 const defaultMeta = {
-  title: 'LaslesVPN',
-  siteName: 'LaslesVPN',
+  title: 'J.R Enterprises',
+  siteName: 'J.R Enterprises',
   description:
-    'Landing page VPN LaslesVPN Best VPN For Privacy, Country and Cheapest',
+    'J.R Enterprises supplies industrial valves, pneumatic and hydraulic components, measuring instruments, and automation products across Pakistan and abroad.',
   // change base url of your web (without '/' at the end)
-  url: 'https://themewagon.com/themes/LaslesVPN-nextjs',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://jr-enterprises-core.vercel.app',
   type: 'website',
   robots: 'follow, index',
   // change with url of your image (recommended dimension = 1.91:1)
   // used in twitter, facebook, etc. card when link copied in tweet/status 
-  image: 'https://themewagon.com/themes/LaslesVPN-nextjs/assets/card-image.png',
-  author: 'Lorem Ipsum'
+  image: '/assets/jr-logo.png',
+  author: 'J.R Enterprises'
 };
 
 /**
@@ -48,25 +48,44 @@ const SeoHead = (props) => {
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
 
+  const pageUrl = new URL(router.asPath, meta.url);
+  pageUrl.search = '';
+  pageUrl.hash = '';
+  const imageUrl = new URL(meta.image, meta.url).href;
+
   return (
     <Head>
       <title>{meta.title}</title>
+      <meta name='application-name' content={meta.siteName} />
       <meta name='robots' content={meta.robots} />
       <meta content={meta.description} name='description' />
-      <meta property='og:url' content={`${meta.url}${router.asPath}`} />
-      <link rel='canonical' href={`${meta.url}${router.asPath}`} />
+      <meta property='og:url' content={pageUrl.href} />
+      <link rel='canonical' href={pageUrl.href} />
       {/* Open Graph */}
       <meta property='og:type' content={meta.type} />
       <meta property='og:site_name' content={meta.siteName} />
       <meta property='og:description' content={meta.description} />
       <meta property='og:title' content={meta.title} />
-      <meta name='image' property='og:image' content={meta.image} />
+      <meta name='image' property='og:image' content={imageUrl} />
       {/* Twitter */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content='@F2aldi' />
       <meta name='twitter:title' content={meta.title} />
       <meta name='twitter:description' content={meta.description} />
-      <meta name='twitter:image' content={meta.image} />
+      <meta name='twitter:image' content={imageUrl} />
+      {router.pathname === '/' && (
+        <script
+          key='website-schema'
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: meta.siteName,
+              url: new URL('/', meta.url).href,
+            }).replace(/</g, '\\u003c'),
+          }}
+        />
+      )}
       {meta.date && (
         <>
           <meta property='article:published_time' content={meta.date} />
