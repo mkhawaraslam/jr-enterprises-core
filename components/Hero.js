@@ -9,7 +9,7 @@ const aboutBlocks = [
     heading: "Company",
     image: "/assets/about-company.jpg",
     imageAlt: "Stainless steel industrial pipes and valves",
-    body: "Established in 2005, JR Enterprises has built a prominent reputation across Pakistan and abroad as a premier importer, technical supplier, and distributor. We specialize in high-performance industrial valves, steam traps, forged fittings, tubing, measuring instruments, and temperature/pressure controls. We bridge modern engineering technology with industrial plant needs, providing end-to-end guidance and optimizing plant efficiency.",
+    body: "Established in 2012, J.R Enterprises has built a prominent reputation across Pakistan and abroad as a premier importer, technical supplier, and distributor. We specialize in high-performance industrial valves, steam traps, forged fittings, tubing, measuring instruments, and temperature/pressure controls. We bridge modern engineering technology with industrial plant needs, providing end-to-end guidance and optimizing plant efficiency.",
   },
   {
     id: "about-vision",
@@ -44,7 +44,7 @@ const Hero = () => {
                   className="text-3xl lg:text-4xl font-medium text-black-600 leading-tight"
                 >
                   {block.headingPrefix}{" "}
-                  <span className="text-orange-500">{block.heading}</span>
+                  <span className="text-primary">{block.heading}</span>
                 </ScrollAnimationWrapper>
                 <ScrollAnimationWrapper
                   as="p"

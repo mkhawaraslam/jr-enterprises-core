@@ -1,5 +1,6 @@
 import React from "react";
-import LogoVPN from "../../public/assets/Logo.svg";
+import Image from "next/image";
+import companyLogo from "../../public/assets/jr-logo.png";
 import Facebook from "../../public/assets/Icon/facebook.svg";
 import TikTok from "../../public/assets/Icon/tiktok.svg";
 import Instagram from "../../public/assets/Icon/instagram.svg";
@@ -11,22 +12,30 @@ const Footer = () => {
     <div className="bg-white-300 pt-44 pb-24">
       <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
         <div className="min-w-0 md:max-w-sm flex flex-col items-start">
-          <LogoVPN className="h-8 w-auto mb-6" />
+          <div className="relative mb-6 h-16 w-64 sm:h-[4.5rem] sm:w-72 max-w-full">
+            <Image
+              src={companyLogo}
+              alt="J.R Enterprises"
+              layout="fill"
+              objectFit="contain"
+              sizes="(min-width: 640px) 288px, 256px"
+            />
+          </div>
           <p className="mb-4 leading-relaxed">
-            <strong className="font-bold text-orange-500">JR Enterprises</strong>, established
-            in 2005, supplies high-performance industrial valves, steam traps,
+            <strong className="font-bold text-primary">J.R Enterprises</strong>, established
+            in 2012, supplies high-performance industrial valves, steam traps,
             fittings, tubing, measuring instruments, and automation components
             across Pakistan and abroad.
           </p>
           <div className="flex w-full mt-2 mb-8 -mx-2">
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Facebook className="h-6 w-6" />
+              <Facebook className="h-6 w-6 text-primary" />
             </div>
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <TikTok className="h-6 w-6 text-orange-500" role="img" aria-label="TikTok" />
+              <TikTok className="h-6 w-6 text-primary" role="img" aria-label="TikTok" />
             </div>
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Instagram className="h-6 w-6" />
+              <Instagram className="h-6 w-6 text-primary" />
             </div>
           </div>
         </div>
@@ -35,19 +44,19 @@ const Footer = () => {
           <address className="text-black-500 not-italic">
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 text-orange-500" aria-hidden="true" />
-                <a href="tel:+923090980866" className="min-w-0 hover:text-orange-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
+                <a href="tel:+923090980866" className="min-w-0 hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                   +92 302 6500974
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 text-orange-500" aria-hidden="true" />
-                <a href="mailto:info@jrenterprises.com" className="min-w-0 break-words hover:text-orange-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
+                <a href="mailto:info@jrenterprises.com" className="min-w-0 break-words hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                   info@jrenterprises.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Location className="h-5 w-5 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <Location className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
                 <span className="min-w-0">
                   Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road, Multan, Pakistan.
                 </span>
@@ -59,7 +68,7 @@ const Footer = () => {
       <div className="max-w-screen-xl w-full mx-auto mt-8 px-6 sm:px-8 lg:px-16">
         <p className="border-t border-gray-100 pt-6 text-sm text-gray-400 text-center">
           Copyright © 2026 |{" "}
-          <strong >JR Enterprises</strong>{" "}
+          <strong >J.R Enterprises</strong>{" "}
           | All Rights Reserved
         </p>
       </div>

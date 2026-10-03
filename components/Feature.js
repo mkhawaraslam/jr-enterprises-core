@@ -118,7 +118,7 @@ const Feature = () => {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search products"
-            className="w-full min-w-0 rounded-md border border-gray-400 bg-white-500 px-4 py-3 text-sm text-black-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            className="w-full min-w-0 rounded-md border border-gray-400 bg-white-500 px-4 py-3 text-sm text-black-600 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
           />
         </div>
       </ScrollAnimationWrapper>
@@ -143,10 +143,10 @@ const Feature = () => {
             onClick={() => setActiveCategory(index)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
             className={
-              "flex-shrink-0 whitespace-nowrap border-b-2 py-3 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500 " +
+              "flex-shrink-0 whitespace-nowrap border-b-2 py-3 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary " +
               (activeCategory === index
-                ? "border-orange-500 text-orange-500"
-                : "border-transparent text-black-500 hover:text-orange-500")
+                ? "border-primary text-primary"
+                : "border-transparent text-black-500 hover:text-primary-hover")
             }
           >
             {category}
@@ -163,7 +163,7 @@ const Feature = () => {
         role="tabpanel"
         aria-labelledby={"catalog-tab-" + activeCategory}
         tabIndex={0}
-        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         {visibleProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -180,7 +180,7 @@ const Feature = () => {
                 setQuery("");
                 setActiveCategory(0);
               }}
-              className="mt-4 text-sm font-medium text-orange-500 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              className="mt-4 text-sm font-medium text-primary underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               Reset filters
             </button>

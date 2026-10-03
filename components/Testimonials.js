@@ -16,7 +16,7 @@ const clients = [
     website: "https://smfoods.com.pk/",
     width: 367,
     height: 700,
-    imageClassName: "client-logo-image--sm",
+    imageClassName: "h-32 max-w-none translate-y-[5px]",
   },
   {
     name: "Colony Textiles",
@@ -24,7 +24,7 @@ const clients = [
     website: "https://colonytextiles.com/",
     width: 115,
     height: 114,
-    imageClassName: "client-logo-image--colony",
+    imageClassName: "h-16 max-w-full [filter:brightness(0)_saturate(100%)_invert(31%)_sepia(89%)_saturate(2479%)_hue-rotate(212deg)_brightness(96%)_contrast(90%)]",
   },
   {
     name: "Masood Textile",
@@ -33,36 +33,70 @@ const clients = [
     width: 541,
     height: 331,
   },
+  {
+    name: "Mahmood Textile",
+    image: "https://www.mahmoodtextile.com/images/2014/09/logo22.png",
+    website: "https://www.mahmoodtextile.com/",
+  },
+  {
+    name: "Masood Roomi",
+    image: "https://masood-roomi.com/storage/2021/12/Untitled-2.png",
+    website: "https://masood-roomi.com/",
+  },
+  {
+    name: "Fazal Cloth",
+    image: "https://www.fazalcloth.com/wp-content/themes/industify/framework/img/retina-dark-logo.png",
+    website: "https://www.fazalcloth.com/",
+  },
+  {
+    name: "Hussain Group",
+    image: "https://www.hussaingroup.com/templates/school/images/logo.png",
+    website: "https://www.hussaingroup.com/",
+  },
+  {
+    name: "Jadeed Group",
+    image: "https://jadeedgroup.com/images/images/logo%20jadeed.png",
+    website: "https://jadeedgroup.com/",
+  },
+  {
+    name: "Lipton Ice Tea",
+    image: "https://w7.pngwing.com/pngs/240/392/png-transparent-lipton-hd-logo-thumbnail.png",
+  },
 ];
 
-const ClientLogo = ({ client }) => {
+const logoGroupClassName = "m-0 flex min-w-[100vw] shrink-0 list-none justify-around gap-4 py-2 pr-4 sm:gap-6 sm:pr-6";
+const logoItemClassName = "min-w-0 w-40 flex-none sm:w-48 motion-reduce:w-auto sm:motion-reduce:w-auto";
+
+const ClientLogo = ({ client, duplicate = false }) => {
   const [imageFailed, setImageFailed] = useState(false);
+  const isLink = Boolean(client.website) && !duplicate;
+  const Component = isLink ? "a" : "div";
 
   return (
-    <a
-      href={client.website}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={client.name + " website (opens in a new tab)"}
-      className="client-logo-link"
+    <Component
+      href={isLink ? client.website : undefined}
+      target={isLink ? "_blank" : undefined}
+      rel={isLink ? "noopener noreferrer" : undefined}
+      aria-label={isLink ? client.name + " website (opens in a new tab)" : undefined}
+      className="group flex min-h-[7rem] items-center justify-center px-2 py-4 text-black-500 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
     >
-      <div className="client-logo-frame">
+      <div className="flex h-20 w-full items-center justify-center overflow-hidden transition-transform duration-300 ease-in-out motion-safe:group-hover:scale-110 motion-safe:group-focus-visible:scale-110 motion-reduce:transition-none">
         {imageFailed ? (
-          <span className="client-logo-fallback">{client.name}</span>
+          <span className="max-w-full text-sm font-medium [overflow-wrap:anywhere]">{client.name}</span>
         ) : (
           <img
             src={client.image}
-            alt={client.name}
+            alt={duplicate ? "" : client.name}
             width={client.width}
             height={client.height}
-            loading="lazy"
+            loading="eager"
             decoding="async"
-            className={"client-logo-image " + (client.imageClassName || "")}
+            className={"block w-auto object-contain " + (client.imageClassName || "h-16 max-w-full")}
             onError={() => setImageFailed(true)}
           />
         )}
       </div>
-    </a>
+    </Component>
   );
 };
 
@@ -77,21 +111,31 @@ const Testimonials = () => {
         >
           Trusted by Happy Customer
         </ScrollAnimationWrapper>
-        <ul
-          aria-label="Our clients"
-          className="client-logo-gallery grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 w-full max-w-5xl mx-auto mt-10 py-6 border-y border-gray-100 bg-white-500"
-        >
-          {clients.map((client, index) => (
-            <ScrollAnimationWrapper
-              as="li"
-              key={client.name}
-              className="min-w-0"
-              custom={{ delay: index * 0.06 }}
+      </div>
+      <ScrollAnimationWrapper className="min-w-0 w-full mt-10 py-6 bg-white-500 text-center">
+        <div className="w-full overflow-hidden [&:hover>div]:[animation-play-state:paused]">
+          <div className="flex w-max animate-client-logos-scroll motion-reduce:block motion-reduce:w-full motion-reduce:animate-none" dir="ltr">
+            <ul
+              className={logoGroupClassName + " motion-reduce:grid motion-reduce:min-w-0 motion-reduce:grid-cols-2 motion-reduce:pr-0 sm:motion-reduce:pr-0 lg:motion-reduce:grid-cols-4"}
+              aria-label="Our clients"
             >
-              <ClientLogo client={client} />
-            </ScrollAnimationWrapper>
-          ))}
-        </ul>
+              {clients.map((client) => (
+                <li key={client.name} className={logoItemClassName}>
+                  <ClientLogo client={client} />
+                </li>
+              ))}
+            </ul>
+            <ul className={logoGroupClassName + " motion-reduce:hidden"} aria-hidden="true">
+              {clients.map((client) => (
+                <li key={client.name} className={logoItemClassName}>
+                  <ClientLogo client={client} duplicate />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </ScrollAnimationWrapper>
+      <div className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto w-full text-center">
         <ScrollAnimationWrapper className="relative z-10 w-full mt-16 -mb-44">
           <div className="relative z-10 rounded-xl py-8 sm:py-14 px-6 sm:px-12 lg:px-16 w-full flex flex-col sm:flex-row justify-between items-center bg-white-500">
             <div className="flex flex-col text-left w-10/12 sm:w-7/12 lg:w-5/12 mb-6 sm:mb-0">

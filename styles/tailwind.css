@@ -3,6 +3,13 @@
 @tailwind base;
 @tailwind components;
 
+@layer base {
+  :root {
+    --primary: 356 71% 45%;
+    --primary-foreground: 0 0% 100%;
+  }
+}
+
 html {
   font-family: "Rubik", sans-serif;
 }
@@ -17,7 +24,7 @@ p {
   content: "";
   height: 2px;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  @apply w-0 bg-orange-500 left-1/2 block bottom-0 absolute;
+  @apply w-0 bg-primary left-1/2 block bottom-0 absolute;
 }
 .animation-active:after {
   @apply left-0 w-full;

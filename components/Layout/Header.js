@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 // import Link from "next/link";
 // Import react scroll
 import { Link as LinkScroll } from "react-scroll";
 // import ButtonOutline from "../misc/ButtonOutline.";
-import LogoVPN from "../../public/assets/Logo.svg";
+import companyLogo from "../../public/assets/jr-logo.png";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState(null);
@@ -21,9 +22,16 @@ const Header = () => {
           (scrollActive ? " shadow-md pt-0" : " pt-4")
         }
       >
-        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto flex items-center justify-between py-3 sm:py-4">
-          <div className="flex items-center flex-shrink-0">
-            <LogoVPN className="h-8 w-auto" />
+        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto flex items-center justify-between py-2">
+          <div className="relative h-12 w-48 sm:h-16 sm:w-64 flex-shrink-0">
+            <Image
+              src={companyLogo}
+              alt="J.R Enterprises"
+              layout="fill"
+              objectFit="contain"
+              sizes="(min-width: 640px) 256px, 192px"
+              priority
+            />
           </div>
           <ul className="hidden lg:flex ml-auto text-black-500 items-center justify-end">
             <LinkScroll
@@ -37,10 +45,10 @@ const Header = () => {
                 setActiveLink("about");
               }}
               className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
+                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" +
                 (activeLink === "about"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 a")
+                  ? " text-primary animation-active "
+                  : " text-black-500 hover:text-primary-hover a")
               }
             >
               About
@@ -56,10 +64,10 @@ const Header = () => {
                 setActiveLink("feature");
               }}
               className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
+                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" +
                 (activeLink === "feature"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
+                  ? " text-primary animation-active "
+                  : " text-black-500 hover:text-primary-hover ")
               }
             >
               Products
@@ -75,10 +83,10 @@ const Header = () => {
                 setActiveLink("testimoni");
               }}
               className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
+                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" +
                 (activeLink === "testimoni"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
+                  ? " text-primary animation-active "
+                  : " text-black-500 hover:text-primary-hover ")
               }
             >
               Clients
@@ -87,7 +95,7 @@ const Header = () => {
           {/* Auth CTAs are hidden for now, but kept here for future reuse.
           <div className="ml-8 font-medium hidden lg:flex justify-end items-center">
             <Link href="/">
-              <a className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
+              <a className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-primary-hover transition-all">
                 Sign In
               </a>
             </Link>
@@ -112,9 +120,9 @@ const Header = () => {
                 setActiveLink("about");
               }}
               className={
-                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all " +
+                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary " +
                 (activeLink === "about"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary text-primary"
                   : " border-transparent")
               }
             >
@@ -145,9 +153,9 @@ const Header = () => {
                 setActiveLink("feature");
               }}
               className={
-                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all " +
+                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary " +
                 (activeLink === "feature"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary text-primary"
                   : " border-transparent ")
               }
             >
@@ -190,9 +198,9 @@ const Header = () => {
                 setActiveLink("testimoni");
               }}
               className={
-                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all " +
+                "flex-1 min-w-0 px-1 sm:px-4 py-2 flex flex-col items-center text-[11px] sm:text-xs border-t-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary " +
                 (activeLink === "testimoni"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary text-primary"
                   : " border-transparent ")
               }
             >
