@@ -5,14 +5,16 @@ import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
 const aboutBlocks = [
   {
     id: "about-company",
-    heading: "About JR Enterprises",
+    headingPrefix: "The",
+    heading: "Company",
     image: "/assets/about-company.jpg",
     imageAlt: "Stainless steel industrial pipes and valves",
     body: "Established in 2005, JR Enterprises has built a prominent reputation across Pakistan and abroad as a premier importer, technical supplier, and distributor. We specialize in high-performance industrial valves, steam traps, forged fittings, tubing, measuring instruments, and temperature/pressure controls. We bridge modern engineering technology with industrial plant needs, providing end-to-end guidance and optimizing plant efficiency.",
   },
   {
     id: "about-vision",
-    heading: "Our Vision & Commitment",
+    headingPrefix: "Our",
+    heading: "Vision",
     image: "/assets/about-vision.jpg",
     imageAlt: "Robotic equipment on an automated production line",
     body: "By the Grace of Almighty ALLAH, our vision is to lead the industrial automation sector through uncompromising quality, ultra-modern technology, and door-to-door technical expertise. We aim to empower industries with reliable, durable, and highly efficient automation components that ensure optimal machinery performance and long-term operational success.",
@@ -41,7 +43,8 @@ const Hero = () => {
                   id={block.id}
                   className="text-3xl lg:text-4xl font-medium text-black-600 leading-tight"
                 >
-                  {block.heading}
+                  {block.headingPrefix}{" "}
+                  <span className="text-orange-500">{block.heading}</span>
                 </ScrollAnimationWrapper>
                 <ScrollAnimationWrapper
                   as="p"

@@ -1,86 +1,67 @@
 import React from "react";
 import LogoVPN from "../../public/assets/Logo.svg";
 import Facebook from "../../public/assets/Icon/facebook.svg";
-import Twitter from "../../public/assets/Icon/twitter.svg";
+import TikTok from "../../public/assets/Icon/tiktok.svg";
 import Instagram from "../../public/assets/Icon/instagram.svg";
+import Phone from "../../public/assets/Icon/phone.svg";
+import Mail from "../../public/assets/Icon/mail.svg";
+import Location from "../../public/assets/Icon/gridicons_location.svg";
 const Footer = () => {
   return (
     <div className="bg-white-300 pt-44 pb-24">
-      <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-rows-6 sm:grid-rows-1 grid-flow-row sm:grid-flow-col grid-cols-3 sm:grid-cols-12 gap-4">
-        <div className="row-span-2 sm:col-span-4 col-start-1 col-end-4 sm:col-end-5 flex flex-col items-start ">
+      <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+        <div className="min-w-0 md:max-w-sm flex flex-col items-start">
           <LogoVPN className="h-8 w-auto mb-6" />
-          <p className="mb-4">
-            <strong className="font-medium">LaslesVPN</strong> is a private
-            virtual network that has unique features and has high security.
+          <p className="mb-4 leading-relaxed">
+            <strong className="font-bold text-orange-500">JR Enterprises</strong>, established
+            in 2005, supplies high-performance industrial valves, steam traps,
+            fittings, tubing, measuring instruments, and automation components
+            across Pakistan and abroad.
           </p>
           <div className="flex w-full mt-2 mb-8 -mx-2">
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
               <Facebook className="h-6 w-6" />
             </div>
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Twitter className="h-6 w-6" />
+              <TikTok className="h-6 w-6 text-orange-500" role="img" aria-label="TikTok" />
             </div>
             <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
               <Instagram className="h-6 w-6" />
             </div>
           </div>
-          <p className="text-gray-400">©{new Date().getFullYear()} - LaslesVPN</p>
-          <p className="text-gray-400">Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
         </div>
-        <div className=" row-span-2 sm:col-span-2 sm:col-start-7 sm:col-end-9 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Product</p>
-          <ul className="text-black-500 ">
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              <a href="https://themewagon.com/themes/LaslesVPN-nextjs">Download</a>{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Locations{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Server{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Countries{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Blog{" "}
-            </li>
-          </ul>
+        <div className="min-w-0 w-full md:max-w-md md:justify-self-end flex flex-col">
+          <p className="text-black-600 mb-4 font-medium text-lg">Contact Us</p>
+          <address className="text-black-500 not-italic">
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 text-orange-500" aria-hidden="true" />
+                <a href="tel:+923090980866" className="min-w-0 hover:text-orange-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                  +92 302 6500974
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 text-orange-500" aria-hidden="true" />
+                <a href="mailto:info@jrenterprises.com" className="min-w-0 break-words hover:text-orange-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500">
+                  info@jrenterprises.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Location className="h-5 w-5 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <span className="min-w-0">
+                  Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road, Multan, Pakistan.
+                </span>
+              </li>
+            </ul>
+          </address>
         </div>
-        <div className="row-span-2 sm:col-span-2 sm:col-start-9 sm:col-end-11 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Engage</p>
-          <ul className="text-black-500">
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              LaslesVPN ?{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              FAQ{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Tutorials{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              About Us{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Privacy Policy{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Terms of Service{" "}
-            </li>
-          </ul>
-        </div>
-        <div className="row-span-2 sm:col-span-2 sm:col-start-11 sm:col-end-13 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Earn Money</p>
-          <ul className="text-black-500">
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Affiliate{" "}
-            </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Become Partner{" "}
-            </li>
-          </ul>
-        </div>
+      </div>
+      <div className="max-w-screen-xl w-full mx-auto mt-8 px-6 sm:px-8 lg:px-16">
+        <p className="border-t border-gray-100 pt-6 text-sm text-gray-400 text-center">
+          Copyright © 2022 |{" "}
+          <strong >JR Enterprises</strong>{" "}
+          | All Rights Reserved
+        </p>
       </div>
     </div>
   );

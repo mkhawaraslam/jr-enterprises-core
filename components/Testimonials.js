@@ -4,19 +4,19 @@ import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
 
 const clients = [
   {
+    name: "Volka Food",
+    image: "https://volkafood.com/wp-content/themes/beeta/resources/custom/img/volka-logo.png",
+    website: "https://volkafood.com/",
+    width: 364,
+    height: 271,
+  },
+  {
     name: "SM Foods",
     image: "https://smfoods.com.pk/wp-content/themes/beeta/resources/custom/img/sm-logo-transparnt-2.png",
     website: "https://smfoods.com.pk/",
     width: 367,
     height: 700,
     imageClassName: "client-logo-image--sm",
-  },
-  {
-    name: "Volka Food",
-    image: "https://volkafood.com/wp-content/themes/beeta/resources/custom/img/volka-logo.png",
-    website: "https://volkafood.com/",
-    width: 364,
-    height: 271,
   },
   {
     name: "Colony Textiles",
