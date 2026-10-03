@@ -1,0 +1,72 @@
+[
+  {
+    "id": "pneumatic-cylinders",
+    "title": "Pneumatic Cylinders",
+    "category": "Pneumatics",
+    "image": "/assets/product-collections/pneumatic-cylinders.png",
+    "alt": "Collection of pneumatic cylinders, compact actuators, rotary actuators and grippers"
+  },
+  {
+    "id": "pneumatic-pipes-fittings",
+    "title": "Pneumatic Pipes & Fittings",
+    "category": "Pneumatics",
+    "image": "/assets/product-collections/pneumatic-pipes-fittings.png",
+    "alt": "Collection of pneumatic tubing, push-in fittings, couplings and silencers"
+  },
+  {
+    "id": "solenoid-valves",
+    "title": "Solenoid Valves",
+    "category": "Flow Control",
+    "image": "/assets/product-collections/solenoid-valves.png",
+    "alt": "Collection of solenoid valves, valve manifolds and electrically operated pneumatic valves"
+  },
+  {
+    "id": "mechanical-foot-hand-valves",
+    "title": "Mechanical, Foot & Hand Valves",
+    "category": "Flow Control",
+    "image": "/assets/product-collections/mechanical-foot-hand-valves.png",
+    "alt": "Collection of push-button, lever-operated, hand-operated and foot-operated valves"
+  },
+  {
+    "id": "hydraulic-valves-seals",
+    "title": "Hydraulic Valves & Seals",
+    "category": "Hydraulics",
+    "image": "/assets/product-collections/hydraulic-valves-seals.png",
+    "alt": "Collection of hydraulic control valves, hoses and sealing rings"
+  },
+  {
+    "id": "air-service-units",
+    "title": "Air Service Units",
+    "category": "Air Preparation",
+    "image": "/assets/product-collections/air-service-units.png",
+    "alt": "Collection of air filters, pressure regulators and filter regulator lubricator units"
+  },
+  {
+    "id": "pressure-gauges-transmitters",
+    "title": "Pressure Gauges & Transmitters",
+    "category": "Instrumentation",
+    "image": "/assets/product-collections/pressure-gauges-transmitters.png",
+    "alt": "Collection of pressure gauges, pressure transmitters and temperature measurement instruments"
+  },
+  {
+    "id": "normally-closed-open-valves",
+    "title": "Normally Closed & Open Valves",
+    "category": "Flow Control",
+    "image": "/assets/product-collections/normally-closed-open-valves.png",
+    "alt": "Collection of normally closed and normally open brass, stainless steel and flanged valves"
+  },
+  {
+    "id": "angle-valves",
+    "title": "Angle Valves",
+    "category": "Flow Control",
+    "image": "/assets/product-collections/angle-valves.png",
+    "alt": "Collection of actuated and hand-operated angle valves and diaphragm valves"
+  },
+  {
+    "id": "manual-auto-operated-valves",
+    "title": "Manual & Auto Operated Valves",
+    "category": "Industrial Valves",
+    "image": "/assets/product-collections/manual-auto-operated-valves.png",
+    "alt": "Collection of manually operated and automated industrial valves with handwheels and actuators"
+  }
+]

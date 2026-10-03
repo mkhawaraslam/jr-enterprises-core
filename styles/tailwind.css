@@ -33,25 +33,6 @@ p {
   @apply left-0 w-full;
 }
 
-li.custom-list:before {
-  content: "\2026"; /* bullet point, for screen readers */
-  text-indent: -9999999px; /* move the bullet point out of sight */
-
-  width: 0.4em;
-  height: 1em;
-  background-repeat: no-repeat;
-
-  background-size: 0.4em 0.7em;
-  background-position: 0 0.3em;
-  font-size: 300%;
-  top: -0.35em;
-  @apply absolute block;
-}
-li.circle-check:before {
-  background-image: url("/assets/Icon/checklist.svg");
-  left: -0.7em;
-  top: -0.4em;
-}
 /* purgecss end ignore */
 @tailwind utilities;
 /* purgecss start ignore */
