@@ -1,5 +1,6 @@
 import Feature from "../components/Feature";
 import Testimonials from "../components/Testimonials";
+import QuoteSection from "../components/QuoteSection";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout/Layout";
 import SeoHead from "../components/SeoHead";
@@ -12,6 +13,7 @@ export default function Home() {
         <Hero />
         <Feature />
         <Testimonials />
+        <QuoteSection />
       </Layout>
     </>
   );

@@ -7,9 +7,10 @@ import Instagram from "../../public/assets/Icon/instagram.svg";
 import Phone from "../../public/assets/Icon/phone.svg";
 import Mail from "../../public/assets/Icon/mail.svg";
 import Location from "../../public/assets/Icon/gridicons_location.svg";
+import { businessPhone } from "../../data/contact";
 const Footer = () => {
   return (
-    <div className="bg-white-300 pt-44 pb-24">
+    <div className="bg-white-300 pt-12 sm:pt-16 pb-24">
       <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
         <div className="min-w-0 md:max-w-sm flex flex-col items-start">
           <div className="relative mb-6 h-16 w-64 sm:h-[4.5rem] sm:w-72 max-w-full">
@@ -45,8 +46,8 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
-                <a href="tel:+923090980866" className="min-w-0 hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-                  +92 302 6500974
+                <a href={businessPhone.telephone} className="min-w-0 hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  {businessPhone.display}
                 </a>
               </li>
               <li className="flex items-start gap-3">
