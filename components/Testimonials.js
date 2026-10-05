@@ -73,7 +73,7 @@ const Testimonials = () => {
           id="testimonials-heading"
           className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black-600 leading-normal max-w-xl mx-auto"
         >
-          Trusted by Happy Customer
+          Trusted by <span className="text-primary">Happy Customers</span>
         </ScrollAnimationWrapper>
       </div>
       <ScrollAnimationWrapper className="min-w-0 w-full mt-10 py-6 bg-white-500 text-center">

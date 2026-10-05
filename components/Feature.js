@@ -7,8 +7,9 @@ import productCollections from "../data/productCollections.json";
 const ProductCollection = ({ collection, index }) => (
   <ScrollAnimationWrapper
     as="li"
+    id={collection.id}
     custom={{ delay: (index % 3) * 0.08, duration: 0.65 }}
-    className="min-w-0 h-full"
+    className="min-w-0 h-full scroll-mt-24"
   >
     <div
       className="group overflow-hidden rounded-lg border border-gray-100 bg-white-500 transition-shadow duration-300 hover:shadow-lg motion-safe:transition-all motion-safe:hover:-translate-y-1"
@@ -43,7 +44,7 @@ const Feature = () => (
             id="catalog-heading"
             className="text-3xl lg:text-4xl font-medium leading-tight text-black-600"
           >
-            Our <span className="text-primary">Product</span>
+            Our <span className="text-primary">Products</span>
           </h2>
           <p className="text-sm text-black-500">
             {productCollections.length} collections

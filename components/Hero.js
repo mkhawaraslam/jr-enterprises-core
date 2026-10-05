@@ -5,7 +5,7 @@ import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
 const aboutBlocks = [
   {
     id: "about-company",
-    headingPrefix: "The",
+    headingPrefix: "Our",
     heading: "Company",
     image: "/assets/about-company.jpg",
     imageAlt: "Stainless steel industrial pipes and valves",
@@ -23,13 +23,12 @@ const aboutBlocks = [
 
 const Hero = () => {
   return (
-    <div
+    <section
       className="max-w-screen-xl mt-24 px-6 sm:px-8 lg:px-16 mx-auto"
       id="about"
+      aria-labelledby="about-company"
     >
       {aboutBlocks.map((block, index) => {
-        const Heading = index === 0 ? "h1" : "h2";
-
         return (
           <section
             key={block.id}
@@ -39,7 +38,7 @@ const Hero = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 lg:gap-16 py-8 sm:py-12">
               <div className={"min-w-0 " + (index === 1 ? "md:order-2" : "")}>
                 <ScrollAnimationWrapper
-                  as={Heading}
+                  as={index === 0 ? "h1" : "h2"}
                   id={block.id}
                   className="text-3xl lg:text-4xl font-medium text-black-600 leading-tight"
                 >
@@ -76,7 +75,7 @@ const Hero = () => {
           </section>
         );
       })}
-    </div>
+    </section>
   );
 };
 

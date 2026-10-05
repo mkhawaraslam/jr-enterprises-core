@@ -22,10 +22,10 @@ const Logo = ({ item, duplicate = false, imageClassName }) => {
         ) : (
           <img
             src={item.image}
-            alt={duplicate ? "" : item.name}
+            alt={duplicate ? "" : item.name + " logo"}
             width={item.width}
             height={item.height}
-            loading="eager"
+            loading="lazy"
             decoding="async"
             className={"block w-auto object-contain " + (item.imageClassName || imageClassName)}
             onError={() => setImageFailed(true)}

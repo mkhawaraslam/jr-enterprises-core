@@ -1,0 +1,14 @@
+{
+  "name": "J.R Enterprises",
+  "foundingYear": "2012",
+  "email": "javaid@jrenterprisespk.com",
+  "phone": "+923026500974",
+  "phoneDisplay": "+92 302 6500974",
+  "address": {
+    "streetAddress": "Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road",
+    "addressLocality": "Multan",
+    "addressCountry": "PK"
+  },
+  "addressDisplay": "Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road, Multan, Pakistan.",
+  "socialProfiles": []
+}

@@ -11,7 +11,7 @@ const Brands = () => (
         id="brands-heading"
         className="text-3xl lg:text-4xl font-medium leading-tight text-black-600"
       >
-        Our <span className="text-primary">Brand</span>
+        Our <span className="text-primary">Brands</span>
       </ScrollAnimationWrapper>
     </div>
     <ScrollAnimationWrapper className="min-w-0 w-full mt-6 py-4">

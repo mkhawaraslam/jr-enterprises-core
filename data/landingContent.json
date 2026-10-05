@@ -1,0 +1,34 @@
+{
+  "summary": "J.R Enterprises supplies industrial valves, pneumatic and hydraulic components, and measuring instruments to businesses across Pakistan. Based in Multan and established in 2012, we help industrial teams source components, understand technical requirements, and request quotations for maintenance, machinery, and plant automation projects.",
+  "support": [
+    { "question": "What components can you source?", "answer": "Industrial valves, pneumatic and hydraulic components, air preparation equipment, and measuring instruments for industrial machinery and plant systems." },
+    { "question": "How do we support product selection?", "answer": "Share your application, operating conditions, and connection details so our team can discuss suitable component requirements with you." },
+    { "question": "How is pricing confirmed?", "answer": "Pricing is quotation-only. Contact our team with the required specification, quantity, and delivery location to discuss pricing and availability." }
+  ],
+  "selection": [
+    { "id": "pneumatic-cylinders", "components": "Linear cylinders, compact cylinders, rotary actuators, and grippers", "specifications": "Bore, stroke, mounting, operating pressure, and load" },
+    { "id": "pneumatic-pipes-fittings", "components": "Pneumatic tubing, push-in fittings, couplings, and silencers", "specifications": "Tube diameter, thread size, material, and working pressure" },
+    { "id": "solenoid-valves", "components": "Electrically operated valves and pneumatic valve manifolds", "specifications": "Voltage, port size, valve function, medium, and pressure" },
+    { "id": "mechanical-foot-hand-valves", "components": "Push-button, lever, hand-operated, and foot-operated valves", "specifications": "Actuation type, number of ports, connections, and pressure" },
+    { "id": "hydraulic-valves-seals", "components": "Hydraulic valves, hoses, and sealing components", "specifications": "Flow, operating pressure, connection size, and seal dimensions" },
+    { "id": "air-service-units", "components": "Air filters, regulators, lubricators, and combination units", "specifications": "Port size, flow, filtration requirement, and pressure range" },
+    { "id": "pressure-gauges-transmitters", "components": "Pressure gauges, transmitters, and temperature instruments", "specifications": "Measurement range, accuracy, process connection, and output signal" },
+    { "id": "normally-closed-open-valves", "components": "Normally closed and normally open process valves", "specifications": "Default state, medium, voltage, pressure, and connection size" },
+    { "id": "angle-valves", "components": "Manual and actuated angle valves", "specifications": "Medium, temperature, pressure, body material, and connections" },
+    { "id": "manual-auto-operated-valves", "components": "Handwheel-operated and actuated industrial valves", "specifications": "Valve type, nominal size, pressure rating, material, and actuator" }
+  ],
+  "quotationChecklist": [
+    "Product type, brand preference, model number, or a clear reference photo",
+    "Process medium, working pressure, temperature, and electrical supply where relevant",
+    "Dimensions, connection sizes, and material requirements",
+    "Required quantity and delivery location"
+  ],
+  "faqs": [
+    { "question": "What industrial products does J.R Enterprises supply?", "answer": "J.R Enterprises supplies industrial valves, steam traps, fittings, tubing, pneumatic and hydraulic components, air service units, measuring instruments, and automation components. The catalogue groups product photos into ten collections." },
+    { "question": "Where is J.R Enterprises located?", "answer": "J.R Enterprises is based at Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road, Multan, Pakistan, and supplies industrial customers across Pakistan and abroad." },
+    { "question": "How can I request a product quotation?", "answer": "Send your product specification and quantity by WhatsApp to +92 302 6500974 or email javaid@jrenterprisespk.com. Include your operating requirements and delivery location so the team can discuss pricing and availability." },
+    { "question": "Are product prices published online?", "answer": "No. Products are supplied on a quotation basis rather than with published online prices. Contact J.R Enterprises with your specification, quantity, and delivery location to confirm pricing and availability." },
+    { "question": "Can J.R Enterprises help with technical product selection?", "answer": "Yes. J.R Enterprises provides technical supply guidance. Share the application, working pressure, temperature, material, and connection requirements so the team can discuss suitable component specifications." },
+    { "question": "What details should I include in a quotation request?", "answer": "Include the product type or model, quantity, connection sizes, dimensions, required material, operating pressure and temperature, and delivery location. A reference photo or existing part number can help identify the component." }
+  ]
+}

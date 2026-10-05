@@ -4,6 +4,7 @@ import QuoteSection from "../components/QuoteSection";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout/Layout";
 import SeoHead from "../components/SeoHead";
+import FAQs from "../components/FAQs";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <Hero />
         <Feature />
         <Testimonials />
+        <FAQs />
         <QuoteSection />
       </Layout>
     </>

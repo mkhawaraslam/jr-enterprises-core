@@ -8,15 +8,16 @@ import Phone from "../../public/assets/Icon/phone.svg";
 import Mail from "../../public/assets/Icon/mail.svg";
 import Location from "../../public/assets/Icon/gridicons_location.svg";
 import { businessPhone } from "../../data/contact";
+import business from "../../data/business.json";
 const Footer = () => {
   return (
-    <div className="bg-white-300 pt-12 sm:pt-16 pb-24">
+    <footer className="bg-white-300 pt-12 sm:pt-16 pb-24" aria-labelledby="contact-heading">
       <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
         <div className="min-w-0 md:max-w-sm flex flex-col items-start">
           <div className="relative mb-6 h-16 w-64 sm:h-[4.5rem] sm:w-72 max-w-full">
             <Image
               src={companyLogo}
-              alt="J.R Enterprises"
+              alt="J.R Enterprises industrial supplier logo"
               layout="fill"
               objectFit="contain"
               sizes="(min-width: 640px) 288px, 256px"
@@ -41,7 +42,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="min-w-0 w-full md:max-w-md md:justify-self-end flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Contact Us</p>
+          <h2 id="contact-heading" className="text-black-600 mb-4 font-medium text-lg">How can you contact us?</h2>
           <address className="text-black-500 not-italic">
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
@@ -52,14 +53,14 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
-                <a href="mailto:javaid@jrenterprisespk.com" className="min-w-0 break-words hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-                  javaid@jrenterprisespk.com
+                <a href={"mailto:" + business.email} className="min-w-0 break-words hover:text-primary-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  {business.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Location className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
                 <span className="min-w-0">
-                  Crystal Arcade, Opp-Main Moblink Franchise, LMQ Road, Multan, Pakistan.
+                  {business.addressDisplay}
                 </span>
               </li>
             </ul>
@@ -73,7 +74,7 @@ const Footer = () => {
           | All Rights Reserved
         </p>
       </div>
-    </div>
+    </footer>
   );
 };
 
