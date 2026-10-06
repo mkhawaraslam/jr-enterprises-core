@@ -2,18 +2,26 @@
   "name": "next-landing-vpn",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "npm@10.9.0",
   "scripts": {
     "dev": "next dev",
     "prebuild": "npm run seo:export",
     "build": "next build",
     "start": "next start",
     "export": "npm run build && next export",
-    "seo:export": "node scripts/export-seo.cjs"
+    "seo:export": "node scripts/export-seo.cjs",
+    "quotes:cleanup": "node scripts/cleanup-quote-uploads.cjs"
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.2",
     "autoprefixer": "^10.4.12",
     "framer-motion": "6.0.0",
+    "image-size": "^2.0.2",
     "lucide-react": "^1.51.0",
     "next": "^12.3.1",
     "postcss": "^8.4.17",

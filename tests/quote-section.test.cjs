@@ -18,7 +18,7 @@ test("the full-width quote section replaces the old subscription banner after Cl
   assert.match(read("components/Layout/Footer.js"), /href=\{businessPhone.telephone\}/);
 });
 
-test("the UI-only form uses a native modal with accessible labels and local image cleanup", () => {
+test("the connected form uses a native modal, multiple photos, upload cleanup and confirmed success", () => {
   const source = read("components/QuoteDialog.js");
   parser.parse(source, { sourceType: "module", plugins: ["jsx"] });
   parser.parse(read("components/QuoteSection.js"), { sourceType: "module", plugins: ["jsx"] });
@@ -27,11 +27,15 @@ test("the UI-only form uses a native modal with accessible labels and local imag
   assert.match(source, /aria-modal="true"/);
   assert.match(source, /aria-labelledby="quote-dialog-title"/);
   assert.match(source, /type="file"/);
-  assert.match(source, /URL\.createObjectURL\(photo\)/);
-  assert.match(source, /URL\.revokeObjectURL\(url\)/);
-  assert.match(source, /Not sent\. Online submission is not connected yet\./);
-  assert.match(source, /setReview\(createQuoteRequest\(values, photo\)\)/);
-  assert.doesNotMatch(source, /fetch\(|XMLHttpRequest|localStorage|sessionStorage/);
+  assert.match(source, /URL\.createObjectURL\(file\)/);
+  assert.match(source, /URL\.revokeObjectURL\(preview\)/);
+  assert.match(source, /type="file" multiple/);
+  assert.match(source, /5 MB total/);
+  assert.match(source, /quoteApiRequest\("\/api\/quote-requests\/complete"/);
+  assert.match(source, /setSuccess\(received\)/);
+  assert.match(source, /submissionRef\.current/);
+  assert.match(source, /disabled=\{pending\}/);
+  assert.doesNotMatch(source, /name: "company"|WebP|Not sent|setReview|localStorage|sessionStorage/);
 });
 
 test("Tailwind emits responsive quote, native backdrop, and semantic error/focus styles", async () => {

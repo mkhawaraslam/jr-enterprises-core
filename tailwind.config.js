@@ -1,3 +1,6 @@
+const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 const primary = {
   DEFAULT: "#C4212A",
   hover: "#A61A22",
@@ -12,6 +15,7 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx,html}",
   ],
   theme: {
+    screens: { xs: "360px", ...defaultTheme.screens },
     boxShadow: {
       sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
       DEFAULT:
@@ -46,6 +50,10 @@ module.exports = {
     extend: {
       colors: {
         primary,
+        zinc: colors.zinc,
+        emerald: colors.emerald,
+        amber: colors.amber,
+        sky: colors.sky,
       },
       keyframes: {
         "client-logos-scroll": {
