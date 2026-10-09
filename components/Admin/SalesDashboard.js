@@ -10,6 +10,10 @@ import SalesModulePreview from "./SalesModulePreview";
 import { SalesActivity, SalesAttention, SalesPerformance, SalesSnapshot } from "./SalesOverview";
 import AccountMenu from "./AccountMenu";
 import QuoteRequests from "./QuoteRequests";
+import Businesses from "./Businesses";
+import Customers from "./Customers";
+import Products from "./Products";
+import Quotations from "./Quotations";
 import useQuoteRequestCounts from "./useQuoteRequestCounts";
 import { NewQuoteBadge } from "./QuoteRequestStatus";
 
@@ -24,6 +28,7 @@ const modules = [
   { id: "delivery", label: "Delivery Challans", icon: Truck },
 ];
 const moduleTypes = { quotations: "Quotation", invoices: "Invoice", delivery: "Delivery Challan" };
+const moduleRoutes = { requests: "/admin/quote-requests", business: "/admin/businesses", customers: "/admin/customers", products: "/admin/products", quotations: "/admin/quotations" };
 const documentFilters = [
   { value: "All", label: "All documents" },
   { value: "Quotation", label: "Quotations" },
@@ -50,7 +55,7 @@ function Sidebar({ active, onNavigate, onClose, quoteCount, newRequestCount }) {
   </div>;
 }
 
-export default function SalesDashboard({ user, initialModule = "overview" }) {
+export default function SalesDashboard({ user, initialModule = "overview", heading, children }) {
   const router = useRouter();
   const [active, setActive] = useState(initialModule);
   useEffect(() => { setActive(initialModule); }, [initialModule]);
@@ -65,7 +70,8 @@ export default function SalesDashboard({ user, initialModule = "overview" }) {
   const requestCounts = useQuoteRequestCounts();
   const activeModule = modules.find((module) => module.id === active);
   const currentType = moduleTypes[active] || type;
-  const isDocuments = active === "overview" || Boolean(moduleTypes[active]);
+  const isDocuments = active === "overview" || Boolean(moduleTypes[active]) && !moduleRoutes[active];
+  const isDirectory = active === "business" || active === "customers" || active === "products" || active === "quotations";
   const snapshot = getSalesSnapshot(period);
   const documents = filterDocuments({ period, type: currentType, status, query });
   const baseDocuments = filterDocuments({ period, query });
@@ -73,8 +79,9 @@ export default function SalesDashboard({ user, initialModule = "overview" }) {
   const searchLabel = isDocuments ? "Search documents" : `Search ${activeModule.label.toLowerCase()}`;
 
   const navigate = (module, nextStatus = "All") => {
-    if (module === "requests") { if (active !== "requests") router.push("/admin/quote-requests"); return; }
-    if (active === "requests") { router.push(module === "overview" ? "/admin/dashboard" : `/admin/dashboard?view=${module}`); return; }
+    setMobileOpen(false);
+    if (moduleRoutes[module]) { if (active !== module) router.push(moduleRoutes[module]); return; }
+    if (moduleRoutes[active]) { router.push(module === "overview" ? "/admin/dashboard" : `/admin/dashboard?view=${module}`); return; }
     setActive(module);
     setType("All");
     setStatus(nextStatus);
@@ -96,15 +103,15 @@ export default function SalesDashboard({ user, initialModule = "overview" }) {
   };
 
   return <div className="min-h-screen bg-zinc-50 text-zinc-900">
-    <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 border-r border-zinc-200 bg-white-500 lg:block"><Sidebar active={active} onNavigate={navigate} quoteCount={active === "requests" ? null : quoteCount} newRequestCount={requestCounts.unreviewed} /></aside>
-    <PrototypeDialog open={mobileOpen} onClose={() => setMobileOpen(false)} labelledBy="mobile-navigation-heading" className="fixed bottom-0 left-0 top-0 m-0 h-full max-h-none w-72 max-w-[calc(100%-2rem)] rounded-none border-0"><h2 id="mobile-navigation-heading" className="sr-only">Sales navigation</h2><Sidebar active={active} onNavigate={navigate} onClose={() => setMobileOpen(false)} quoteCount={active === "requests" ? null : quoteCount} newRequestCount={requestCounts.unreviewed} /></PrototypeDialog>
+    <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 border-r border-zinc-200 bg-white-500 lg:block"><Sidebar active={active} onNavigate={navigate} quoteCount={moduleRoutes[active] ? null : quoteCount} newRequestCount={requestCounts.unreviewed} /></aside>
+    <PrototypeDialog open={mobileOpen} onClose={() => setMobileOpen(false)} labelledBy="mobile-navigation-heading" className="fixed bottom-0 left-0 top-0 m-0 h-full max-h-none w-72 max-w-[calc(100%-2rem)] rounded-none border-0"><h2 id="mobile-navigation-heading" className="sr-only">Sales navigation</h2><Sidebar active={active} onNavigate={navigate} onClose={() => setMobileOpen(false)} quoteCount={moduleRoutes[active] ? null : quoteCount} newRequestCount={requestCounts.unreviewed} /></PrototypeDialog>
     <div className="min-w-0 lg:pl-60">
       <header className="border-b border-zinc-200 bg-white-500">
         <div className="mx-auto flex min-h-[81px] max-w-screen-2xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3"><button type="button" onClick={() => setMobileOpen(true)} className={iconButtonClass + " lg:hidden"} title="Open navigation" aria-label="Open navigation"><Menu className="h-5 w-5" aria-hidden="true" /></button><div className="hidden items-center gap-2 text-xs text-zinc-400 lg:flex"><span>Workspace</span><span aria-hidden="true">/</span><span className="text-zinc-700">{activeModule.label}</span></div><a href="/" aria-label="J.R Enterprises homepage" className="relative block h-8 w-32 sm:w-40 lg:hidden"><Image src={logo} alt="J.R Enterprises" layout="fill" objectFit="contain" sizes="160px" priority /></a></div>
-          {active !== "business" && <div className="relative order-3 w-full md:order-none md:max-w-[260px] xl:max-w-xs"><Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-zinc-400" aria-hidden="true" /><input type="search" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); setExportNotice(""); }} aria-label={searchLabel} placeholder={searchLabel + "..."} className="h-10 w-full min-w-0 rounded-md border border-zinc-200 bg-zinc-50 pl-9 pr-9 text-xs placeholder:text-zinc-400 focus:border-primary focus:bg-white-500 focus:outline-none focus:ring-2 focus:ring-primary/20" />{query && <button type="button" onClick={() => { setQuery(""); setPage(1); }} aria-label="Clear search" title="Clear search" className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded text-zinc-400 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><X className="h-3.5 w-3.5" aria-hidden="true" /></button>}</div>}
+          {!isDirectory && <div className="relative order-3 w-full md:order-none md:max-w-[260px] xl:max-w-xs"><Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-zinc-400" aria-hidden="true" /><input type="search" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); setExportNotice(""); }} aria-label={searchLabel} placeholder={searchLabel + "..."} className="h-10 w-full min-w-0 rounded-md border border-zinc-200 bg-zinc-50 pl-9 pr-9 text-xs placeholder:text-zinc-400 focus:border-primary focus:bg-white-500 focus:outline-none focus:ring-2 focus:ring-primary/20" />{query && <button type="button" onClick={() => { setQuery(""); setPage(1); }} aria-label="Clear search" title="Clear search" className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded text-zinc-400 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><X className="h-3.5 w-3.5" aria-hidden="true" /></button>}</div>}
           <div className="flex items-center gap-3 sm:gap-4">
-            {active !== "requests" && <span className="hidden items-center gap-1.5 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-[10px] font-medium text-amber-800 sm:inline-flex">Sample data</span>}
+            {!moduleRoutes[active] && <span className="hidden items-center gap-1.5 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-[10px] font-medium text-amber-800 sm:inline-flex">Sample data</span>}
             <button type="button" onClick={() => navigate("requests")} aria-label={requestCounts.error ? "Quote request counts unavailable" : requestCounts.unreviewed === null ? "View quote requests" : `${requestCounts.unreviewed} unreviewed quote requests`} title={requestCounts.error || "View quote requests"} className={iconButtonClass + " relative"}><Bell className="h-[18px] w-[18px]" aria-hidden="true" />{requestCounts.unreviewed > 0 && <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded bg-primary px-1 text-[9px] font-medium tabular-nums text-primary-foreground" aria-hidden="true">{requestCounts.unreviewed > 99 ? "99+" : requestCounts.unreviewed}</span>}</button>
             <AccountMenu user={user} />
           </div>
@@ -112,17 +119,17 @@ export default function SalesDashboard({ user, initialModule = "overview" }) {
       </header>
       <main id="sales-dashboard-content" className="mx-auto w-full min-w-0 max-w-screen-2xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-7">
         <section aria-labelledby="dashboard-heading" className="flex flex-wrap items-start justify-between gap-4">
-          <div>{active !== "requests" && <div className="mb-2 flex items-center gap-2 text-[10px] font-medium text-amber-800 sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-amber-600" aria-hidden="true" />Sample data</div>}<div className="flex flex-wrap items-center gap-3"><h1 id="dashboard-heading" className="text-2xl font-medium leading-tight">{activeModule.label}</h1>{active === "requests" && <NewQuoteBadge count={requestCounts.unreviewed} />}</div></div>
+          <div className="min-w-0 max-w-full">{!moduleRoutes[active] && <div className="mb-2 flex items-center gap-2 text-[10px] font-medium text-amber-800 sm:hidden"><span className="h-1.5 w-1.5 rounded-full bg-amber-600" aria-hidden="true" />Sample data</div>}<div className="flex flex-wrap items-center gap-3"><h1 id="dashboard-heading" className="min-w-0 break-all text-2xl font-medium leading-tight">{heading || activeModule.label}</h1>{active === "requests" && <NewQuoteBadge count={requestCounts.unreviewed} />}</div></div>
           <div className="flex max-w-full flex-wrap items-center gap-2">{isDocuments && <><label className="sr-only" htmlFor="sales-period">Reporting period</label><select id="sales-period" value={period} onChange={(event) => { setPeriod(event.target.value); setPage(1); setExportNotice(""); }} className={selectClass}>{prototypePeriods.map((entry) => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select><button type="button" onClick={exportDocuments} disabled={!documents.length} className={iconButtonClass + " h-10 w-10 border border-zinc-200 bg-white-500 disabled:cursor-not-allowed disabled:opacity-40"} title="Export sample documents as CSV" aria-label="Export sample documents as CSV"><Download className="h-4 w-4" aria-hidden="true" /></button></>}{active === "overview" && <button type="button" onClick={() => navigate("quotations")} className={primaryButtonClass}>View quotations<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></button>}</div>
         </section>
         {active === "overview" && <><SalesSnapshot snapshot={snapshot} /><div className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]"><SalesPerformance /><SalesAttention snapshot={snapshot} onNavigate={navigate} /></div></>}
-        {active === "requests" ? <QuoteRequests query={query} counts={requestCounts} /> : isDocuments ? <section aria-labelledby="documents-heading" className="min-w-0 overflow-hidden rounded-lg border border-zinc-200 bg-white-500">
+        {children || (active === "business" ? <Businesses /> : active === "customers" ? <Customers /> : active === "products" ? <Products /> : active === "quotations" ? <Quotations /> : active === "requests" ? <QuoteRequests query={query} counts={requestCounts} /> : isDocuments ? <section aria-labelledby="documents-heading" className="min-w-0 overflow-hidden rounded-lg border border-zinc-200 bg-white-500">
           <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-5"><div className="flex items-center gap-3"><h2 id="documents-heading" className="text-sm font-medium">{active === "overview" ? "Recent documents" : activeModule.label}</h2><span className="text-xs tabular-nums text-zinc-400">{documents.length}</span></div><label className="sr-only" htmlFor="document-status">Document status</label><select id="document-status" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); setExportNotice(""); }} className={selectClass}><option value="All">All statuses</option>{statuses[currentType].map((entry) => <option key={entry} value={entry}>{entry}</option>)}</select></div>
           {active === "overview" && <div role="group" aria-label="Document type" className="flex flex-wrap gap-x-5 gap-y-1 px-5">{documentFilters.map((filter) => <button type="button" key={filter.value} aria-pressed={type === filter.value} onClick={() => { setType(filter.value); setStatus("All"); setPage(1); setExportNotice(""); }} className={"inline-flex min-h-[2.75rem] items-center gap-2 border-b-2 pb-3 pt-1 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary " + (type === filter.value ? "border-primary font-medium text-primary" : "border-transparent text-zinc-500 hover:text-zinc-800")}>{filter.label}<span className="text-[10px] tabular-nums opacity-70">{filter.value === "All" ? baseDocuments.length : baseDocuments.filter((document) => document.type === filter.value).length}</span></button>)}</div>}
           <SalesDocuments documents={documents} page={page} onPageChange={setPage} onView={setSelectedDocument} />
-        </section> : <SalesModulePreview module={active} query={query} onView={setSelectedDocument} />}
+        </section> : <SalesModulePreview module={active} query={query} onView={setSelectedDocument} />)}
         {active === "overview" && <SalesActivity />}
-        <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-zinc-200 pt-4 text-[10px] text-zinc-400"><span>JR Enterprises</span><span>{active === "requests" ? "Quote requests" : <>Sales workspace <span aria-hidden="true">/</span> UI prototype</>}</span></footer>
+        <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-zinc-200 pt-4 text-[10px] text-zinc-400"><span>JR Enterprises</span><span>{moduleRoutes[active] ? activeModule.label : <>Sales workspace <span aria-hidden="true">/</span> UI prototype</>}</span></footer>
       </main>
     </div>
     <DocumentPreview document={selectedDocument} onClose={() => setSelectedDocument(null)} />

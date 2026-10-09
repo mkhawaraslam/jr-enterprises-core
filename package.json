@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.3.0"
   },
   "packageManager": "npm@10.9.0",
   "scripts": {
+    "postinstall": "node scripts/sync-pdfjs.cjs",
     "dev": "next dev",
-    "prebuild": "npm run seo:export",
+    "prebuild": "node scripts/sync-pdfjs.cjs && npm run seo:export",
     "build": "next build",
     "start": "next start",
     "export": "npm run build && next export",
     "seo:export": "node scripts/export-seo.cjs",
-    "quotes:cleanup": "node scripts/cleanup-quote-uploads.cjs"
+    "quotes:cleanup": "node scripts/cleanup-quote-uploads.cjs",
+    "businesses:cleanup": "node scripts/cleanup-business-assets.cjs"
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",
@@ -24,12 +26,15 @@
     "image-size": "^2.0.2",
     "lucide-react": "^1.51.0",
     "next": "^12.3.1",
+    "pdfjs-dist": "5.4.624",
+    "pdfmake": "0.3.11",
     "postcss": "^8.4.17",
     "postcss-import": "^13.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scroll": "^1.8.1",
     "react-slick": "^0.27.13",
+    "sharp": "0.35.5",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "^3.1.8"
   },

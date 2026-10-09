@@ -291,6 +291,17 @@ test("the real quote-request inbox is protected, noindex and never labelled as s
   assert.equal((await page.getServerSideProps(context())).redirect.destination, "/admin/login");
 });
 
+test("business management has a protected dedicated route and redirects the old business preview", async () => {
+  const { load, state } = setupAuth(userResponse(undefined));
+  const page = await load("pages/admin/businesses.js").getServerSideProps(context());
+  assert.equal(page.props.user.id, "verified-user-id");
+  assert.equal(page.props.user.role, null);
+  const previous = await load("pages/admin/dashboard.js").getServerSideProps(context("", { view: "business" }));
+  assert.equal(previous.redirect.destination, "/admin/businesses");
+  state.response = { data: { user: null }, error: null };
+  assert.equal((await load("pages/admin/businesses.js").getServerSideProps(context())).redirect.destination, "/admin/login");
+});
+
 test("the previous dashboard preview URL redirects to the main dashboard", async () => {
   const page = createLoader()("pages/admin/dashboard-preview.js");
   assert.deepEqual(normalize(await page.getServerSideProps(context())), {
