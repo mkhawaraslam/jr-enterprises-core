@@ -26,6 +26,8 @@ A null result means the corresponding table is missing. If all base tables exist
 
 `npm install` installs the pinned pdfmake, Sharp and PDF.js dependencies. Postinstall and prebuild copy the matching PDF.js module/worker to `public/vendor/pdfjs`; generated files are ignored by Git and must be deployed with the Next public directory. Node 22.3 or newer is required. No external CDN, browser PDF-generation service or new public storage bucket is used.
 
+Sharp is required through its CommonJS entry only when extracting a logo colour or generating PDF images. This allows Next 12's tracer to follow the supported CommonJS dependency chain (including `dist/libvips.cjs` and the installed native libraries), rather than omitting files from Sharp's newer ESM layout. Listing and reading quotations do not load the native image library at startup. Keep optional npm dependencies enabled so the Linux Sharp/libvips packages are installed on Vercel. After a packaging change, deploy a new build; redeploy without the existing build cache if an old incomplete bundle persists. A missing `sharp/dist/libvips.mjs` module in Vercel logs is a deployment packaging failure, not a missing Supabase migration.
+
 Routes are `/admin/quotations`, `/admin/quotations/new` and `/admin/quotations/[id]`. The old dashboard view redirects to the quotation list. Pages and APIs require a freshly verified Supabase session, remain noindex and uncached, and do not add role restrictions. Public Auth sign-up should remain disabled for the private workspace.
 
 ## Workflow
