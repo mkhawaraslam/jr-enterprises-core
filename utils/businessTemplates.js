@@ -11,11 +11,11 @@ export const documentTypes = [
   { id: "delivery-challan", name: "Delivery challan", reference: "DC-DEMO-001", recipient: "Deliver to" },
 ];
 
-export const defaultBillingPreference = { billing_mode: "builtin", template_id: "industrial", template_version: 1 };
+export const defaultBillingPreference = { billing_mode: "custom", template_id: "industrial", template_version: 1 };
 
 export function normalizeBillingPreference(values) {
   return {
-    billing_mode: values?.billing_mode ?? (values?.billing_format?.path ? "custom" : "builtin"),
+    billing_mode: values?.billing_mode ?? defaultBillingPreference.billing_mode,
     template_id: values?.template_id ?? defaultBillingPreference.template_id,
     template_version: values?.template_version ?? defaultBillingPreference.template_version,
   };

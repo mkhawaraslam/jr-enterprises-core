@@ -24,10 +24,9 @@ export function validateBusiness(values, images = {}, existing = {}, billingForm
   if (business.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(business.email)) errors.email = "Enter a valid email address.";
   if (business.phone && (!/^[+\d\s().-]+$/.test(business.phone) || business.phone.replace(/\D/g, "").length < 7)) errors.phone = "Enter a valid phone number.";
   if (business.ntn && !/^[a-z\d -]+$/i.test(business.ntn)) errors.ntn = "Use letters, numbers, spaces or hyphens for NTN.";
-  if (!["builtin", "custom"].includes(business.billing_mode)) errors.billing_mode = "Choose a document format.";
+  if (business.billing_mode !== "custom") errors.billing_mode = "A custom billing format is required.";
   if (!findBusinessTemplate(business.template_id, business.template_version)) errors.template_id = "Choose an available document template.";
-  if (business.billing_mode === "custom" && !billingFormat && (!existing?.billing_format?.path || removeBillingFormat)) errors.billingFormat = "Upload a custom format or choose a built-in template.";
-  if (business.billing_mode === "builtin" && billingFormat) errors.billingFormat = "Choose Custom format before uploading a file.";
+  if (!billingFormat && (!existing?.billing_format?.path || removeBillingFormat)) errors.billingFormat = "Upload a custom billing format.";
   let total = 0;
   for (const slot of ["logo", "signature"]) {
     const file = images?.[slot];

@@ -4,11 +4,13 @@
 
 Apply `supabase/migrations/202610080004_customers.sql` once in the Supabase SQL Editor or through your migration workflow before deploying the updated application. The migration creates the customer directory, authenticated read policy and service-only write functions. It does not change existing businesses, quote requests or storage. The existing public Supabase URL/anon key and server-only `SUPABASE_SECRET_KEY` (or `SUPABASE_SERVICE_ROLE_KEY`) are required. Never use `NEXT_PUBLIC_` for a privileged key.
 
+Then apply `supabase/migrations/202610100001_customer_optional_fields.sql`. If the customer directory is already set up, apply only this new migration. It allows blank company names, emails and addresses while keeping name/phone requirements, existing records, permissions and revision checks unchanged. Missing values remain empty strings for compatibility with customer search and quotation snapshots. Apply it to each database used by local development or production before deploying the optional-field form.
+
 Visit `/admin/customers`, or choose Customers in the sidebar. `/admin/dashboard?view=customers` redirects to the dedicated route. Pages and APIs require a freshly verified Supabase session and stay noindex and uncached. All verified workspace users can manage customers; no role restriction has been added. Keep public Auth sign-ups disabled for this private workspace.
 
 ## Fields
 
-Name, company name, email, phone and address are required. Name and company name allow 150 characters each; email allows 254, phone 25 and address 1,000. Strings are trimmed and address line breaks are preserved. The UI and authenticated API validate email format and phone characters, including a minimum of seven digits. There are no file uploads, Storage writes, automatic imports or sample customer records in the live directory.
+Only name and phone are required. Company name, email and address can be left blank; their labels do not include an optional suffix or required marker. Name and company name allow 150 characters each; email allows 254, phone 25 and address 1,000. Strings are trimmed and address line breaks are preserved. The UI and authenticated API validate email format when supplied and phone characters, including a minimum of seven digits. Empty email/company/address details are omitted from customer cards and details rather than showing empty links. There are no file uploads, Storage writes, automatic imports or sample customer records in the live directory.
 
 Customers are shared across the workspace, not assigned to an individual business. Multiple contacts may belong to the same company; email and phone are not unique identifiers. Future quotations/invoices/challans can select both the business and customer explicitly. Do not use the shared-workspace read policy for a multi-tenant deployment without adding tenant-scoped access first.
 
