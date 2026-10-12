@@ -2,6 +2,7 @@ import { createSupabaseServerClient, getWorkspaceAccess, setAdminResponseHeaders
 import { createSupabaseServiceClient } from "../../../../../../lib/supabase/service";
 import { readSalesDocument, SalesDocumentError } from "../../../../../../lib/sales-documents/server";
 import { salesDocumentPdf } from "../../../../../../lib/quotations/pdf";
+import { salesDocumentFilename } from "../../../../../../utils/adminSalesDocument";
 
 export default async function handler(req, res) {
   setAdminResponseHeaders(res);
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
     if (!client) throw new SalesDocumentError(503, "PDF generation is unavailable. Check the server-only Supabase key.");
     const bytes = await salesDocumentPdf(client, document);
     res.setHeader("Content-Type", "application/pdf"); res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("Content-Disposition", `inline; filename="${document.reference}.pdf"`);
+    res.setHeader("Content-Disposition", `inline; filename="${salesDocumentFilename(document.kind, document.reference)}"`);
     return res.status(200).send(bytes);
   } catch (error) {
     return res.status(error instanceof SalesDocumentError ? error.status : 503).json({ error: error instanceof SalesDocumentError ? error.message : "The document PDF could not be generated. Its saved details remain unchanged." });

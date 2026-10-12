@@ -2,6 +2,7 @@ import { createSupabaseServerClient, getWorkspaceAccess, setAdminResponseHeaders
 import { createSupabaseServiceClient } from "../../../../../lib/supabase/service";
 import { readQuotation, QuotationError } from "../../../../../lib/quotations/server";
 import { quotationPdf } from "../../../../../lib/quotations/pdf";
+import { salesDocumentFilename } from "../../../../../utils/adminSalesDocument";
 
 export default async function handler(req, res) {
   setAdminResponseHeaders(res);
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
     if (!client) throw new QuotationError(503, "PDF generation is unavailable. Check the server-only Supabase key.");
     const bytes = await quotationPdf(client, quote);
     res.setHeader("Content-Type", "application/pdf"); res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("Content-Disposition", `inline; filename="${quote.reference}.pdf"`);
+    res.setHeader("Content-Disposition", `inline; filename="${salesDocumentFilename("quotation", quote.reference)}"`);
     return res.status(200).send(bytes);
   } catch (error) { return res.status(error instanceof QuotationError ? error.status : 503).json({ error: error instanceof QuotationError ? error.message : "The quotation PDF could not be generated. Its saved details remain unchanged." }); }
 }

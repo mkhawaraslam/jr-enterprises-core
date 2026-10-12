@@ -68,6 +68,12 @@ export function letterheadReferenceDocument(document, images, kind) {
     { canvas: [{ type: "line", x1: 0, y1: 0, x2: metadataWidth, y2: 0, lineWidth: 0.6 }] },
     { text: business.name, font: "Times", fontSize: 15, bold: true, margin: [0, 3, 0, 0] },
   ] };
+  const paymentInstructions = kind === "invoice" && isJrEnterprises ? [
+    { text: "PAYMENT INSTRUCTIONS", bold: true, fontSize: 10, margin: [0, 0, 0, 5] },
+    { text: "Bank: Faysal Bank", margin: [0, 0, 0, 3] },
+    { text: "Account no: 0203007000004651", margin: [0, 0, 0, 3] },
+    { text: "Account title: J.R ENTERPRISES" },
+  ] : null;
   return {
     pageSize: "LETTER", pageMargins: [layout.margin, 26, layout.margin, 42],
     defaultStyle: { font: "Roboto", fontSize: layout.fontSize, color: "#000000" },
@@ -78,7 +84,7 @@ export function letterheadReferenceDocument(document, images, kind) {
       { table: { widths: tableWidths, body: rows, headerRows: 2, dontBreakRows: true,
         heights: (row) => row === 0 ? 76 : row === 1 ? 10 : { compact: 28, normal: 46, spacious: 64 }[layout.density] }, layout: grid },
       summary, { unbreakable: true, stack: [
-        { columns: [{ width: "*", stack: kind === "challan" ? [{ text: "Received by: _____________________", margin: [0, 20, 0, 10] }, { text: "Signature / date: __________________" }] : [{ text: "" }] }, signature], columnGap: 16 },
+        { columns: [{ width: "*", ...(paymentInstructions ? { stack: paymentInstructions, fontSize: 10 } : { stack: kind === "challan" ? [{ text: "Received by: _____________________", margin: [0, 20, 0, 10] }, { text: "Signature / date: __________________" }] : [{ text: "" }] }) }, signature], columnGap: 16 },
         ...(layout.footer ? [{ text: layout.footer, alignment: "center", margin: [0, 24, 0, 0] }] : []),
       ] },
     ],

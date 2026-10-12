@@ -40,6 +40,10 @@ The `letterhead-grid-v1` presentation keeps the original company name beside its
 
 The superseded below-logo header controls are removed. Existing optional `letterhead` definitions remain readable, and any saved website is retained on the right, but the company name always uses the original beside-logo position. `202610120002_brand_letterhead.sql` remains available for deployments that already saved this optional definition. The standard nine-field layout does not need that migration for the website/Customer-label correction.
 
+For J.R. Enterprises invoices using this letterhead, Payment Instructions appear below the notes/subtotal on the left, opposite the signature, following the supplied `Quote-3237.pdf` reference. The bank is Faysal Bank, account number `0203007000004651`, account title `J.R ENTERPRISES`. The block stays with the signature when a document runs to another page. It is omitted from quotations, delivery challans and other businesses' invoices.
+
+Downloads, native file sharing, WhatsApp download fallback and PDF response filenames use the same `salesDocumentFilename` formatter: `quote-3525.pdf`, `invoice-3525.pdf` and `delivery-challan-3525.pdf`. Legacy document-type prefixes are replaced for filenames only; the rest of the reference, including historical business/year identifiers, remains intact. Stored and printed document numbers do not change.
+
 ## Persistence and Security
 
 `business_document_layouts` stores immutable, numbered, data-only definitions with the business ID, immutable reference path, SHA-256 hash, approver and time. The latest approval matching the current path/hash is used. Browser clients have authenticated read-only access; approval writes use a same-origin JSON endpoint, fresh Supabase authentication and a service-only transactional RPC. No role restrictions were added. Routes and binary previews remain noindex and private/no-store.

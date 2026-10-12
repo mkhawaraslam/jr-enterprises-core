@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowLeft, Download, LoaderCircle, Printer, Share2 } from "lucide-react";
 import { formatQuotationAmount, formatQuotationDate } from "../../utils/adminQuotation";
-import { documentApi, salesDocumentType } from "../../utils/adminSalesDocument";
+import { documentApi, salesDocumentFilename, salesDocumentType } from "../../utils/adminSalesDocument";
 
 const PdfViewer = dynamic(() => import("./QuotationPdfViewer"), { ssr: false });
 const tools = "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white-500 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-40";
@@ -24,11 +24,11 @@ export default function SalesDocumentShow({ document: quote, kind = "quotation" 
       if (!response.headers.get("Content-Type")?.includes("application/pdf")) throw new Error("The response was not a PDF file.");
       const blob = await response.blob();
       if (controller.signal.aborted) return;
-      const document = new File([blob], quote.reference + ".pdf", { type: "application/pdf" });
+      const document = new File([blob], salesDocumentFilename(kind, quote.reference), { type: "application/pdf" });
       url.current = URL.createObjectURL(document); setFile(document);
     })().catch((cause) => { if (!controller.signal.aborted) setError(cause.message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => { controller.abort(); if (url.current) { URL.revokeObjectURL(url.current); url.current = null; } frame.current?.remove(); };
-  }, [api, quote.id, quote.reference, retry]);
+  }, [api, kind, quote.id, quote.reference, retry]);
   const download = () => { const anchor = document.createElement("a"); anchor.href = url.current; anchor.download = file.name; document.body.appendChild(anchor); anchor.click(); anchor.remove(); };
   const share = async () => {
     if (!file || sharingBusy.current) return;

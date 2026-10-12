@@ -8,6 +8,15 @@ export const salesDocumentType = (kind) => typeof kind === "string" && Object.pr
 export const documentApi = (kind) => "/api/admin/sales-documents/" + kind;
 const text = (value) => typeof value === "string" ? value.trim() : "";
 
+export function salesDocumentFilename(kind, reference) {
+  const prefix = { quotation: "quote", invoice: "invoice", challan: "delivery-challan" }[kind];
+  if (!prefix || !["quotation", "invoice", "challan"].includes(kind)) throw new Error("Unsupported document type.");
+  const number = String(reference ?? "").trim()
+    .replace(/^(?:QT|QTN|QUOTE|QUOTATION|INV|INVOICE|DC|DELIVERY-CHALLAN)[-_ ]+/i, "")
+    .replace(/[^a-zA-Z0-9_-]/g, "-").replace(/-+/g, "-").replace(/^-+|-+$/g, "") || "document";
+  return `${prefix}-${number}.pdf`;
+}
+
 export function normalizeSalesDocument(kind, values) {
   const { valid_until, ...document } = normalizeQuotation(values);
   return {
