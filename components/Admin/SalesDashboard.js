@@ -14,6 +14,7 @@ import Businesses from "./Businesses";
 import Customers from "./Customers";
 import Products from "./Products";
 import Quotations from "./Quotations";
+import SalesDocumentList from "./SalesDocumentList";
 import useQuoteRequestCounts from "./useQuoteRequestCounts";
 import { NewQuoteBadge } from "./QuoteRequestStatus";
 
@@ -28,7 +29,7 @@ const modules = [
   { id: "delivery", label: "Delivery Challans", icon: Truck },
 ];
 const moduleTypes = { quotations: "Quotation", invoices: "Invoice", delivery: "Delivery Challan" };
-const moduleRoutes = { requests: "/admin/quote-requests", business: "/admin/businesses", customers: "/admin/customers", products: "/admin/products", quotations: "/admin/quotations" };
+const moduleRoutes = { requests: "/admin/quote-requests", business: "/admin/businesses", customers: "/admin/customers", products: "/admin/products", quotations: "/admin/quotations", invoices: "/admin/invoices", delivery: "/admin/delivery-challans" };
 const documentFilters = [
   { value: "All", label: "All documents" },
   { value: "Quotation", label: "Quotations" },
@@ -71,7 +72,7 @@ export default function SalesDashboard({ user, initialModule = "overview", headi
   const activeModule = modules.find((module) => module.id === active);
   const currentType = moduleTypes[active] || type;
   const isDocuments = active === "overview" || Boolean(moduleTypes[active]) && !moduleRoutes[active];
-  const isDirectory = active === "business" || active === "customers" || active === "products" || active === "quotations";
+  const isDirectory = ["business", "customers", "products", "quotations", "invoices", "delivery"].includes(active);
   const snapshot = getSalesSnapshot(period);
   const documents = filterDocuments({ period, type: currentType, status, query });
   const baseDocuments = filterDocuments({ period, query });
@@ -123,7 +124,7 @@ export default function SalesDashboard({ user, initialModule = "overview", headi
           <div className="flex max-w-full flex-wrap items-center gap-2">{isDocuments && <><label className="sr-only" htmlFor="sales-period">Reporting period</label><select id="sales-period" value={period} onChange={(event) => { setPeriod(event.target.value); setPage(1); setExportNotice(""); }} className={selectClass}>{prototypePeriods.map((entry) => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select><button type="button" onClick={exportDocuments} disabled={!documents.length} className={iconButtonClass + " h-10 w-10 border border-zinc-200 bg-white-500 disabled:cursor-not-allowed disabled:opacity-40"} title="Export sample documents as CSV" aria-label="Export sample documents as CSV"><Download className="h-4 w-4" aria-hidden="true" /></button></>}{active === "overview" && <button type="button" onClick={() => navigate("quotations")} className={primaryButtonClass}>View quotations<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></button>}</div>
         </section>
         {active === "overview" && <><SalesSnapshot snapshot={snapshot} /><div className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]"><SalesPerformance /><SalesAttention snapshot={snapshot} onNavigate={navigate} /></div></>}
-        {children || (active === "business" ? <Businesses /> : active === "customers" ? <Customers /> : active === "products" ? <Products /> : active === "quotations" ? <Quotations /> : active === "requests" ? <QuoteRequests query={query} counts={requestCounts} /> : isDocuments ? <section aria-labelledby="documents-heading" className="min-w-0 overflow-hidden rounded-lg border border-zinc-200 bg-white-500">
+        {children || (active === "business" ? <Businesses /> : active === "customers" ? <Customers /> : active === "products" ? <Products /> : active === "quotations" ? <Quotations /> : active === "invoices" || active === "delivery" ? <SalesDocumentList key={active} kind={active === "invoices" ? "invoice" : "challan"} /> : active === "requests" ? <QuoteRequests query={query} counts={requestCounts} /> : isDocuments ? <section aria-labelledby="documents-heading" className="min-w-0 overflow-hidden rounded-lg border border-zinc-200 bg-white-500">
           <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-5"><div className="flex items-center gap-3"><h2 id="documents-heading" className="text-sm font-medium">{active === "overview" ? "Recent documents" : activeModule.label}</h2><span className="text-xs tabular-nums text-zinc-400">{documents.length}</span></div><label className="sr-only" htmlFor="document-status">Document status</label><select id="document-status" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); setExportNotice(""); }} className={selectClass}><option value="All">All statuses</option>{statuses[currentType].map((entry) => <option key={entry} value={entry}>{entry}</option>)}</select></div>
           {active === "overview" && <div role="group" aria-label="Document type" className="flex flex-wrap gap-x-5 gap-y-1 px-5">{documentFilters.map((filter) => <button type="button" key={filter.value} aria-pressed={type === filter.value} onClick={() => { setType(filter.value); setStatus("All"); setPage(1); setExportNotice(""); }} className={"inline-flex min-h-[2.75rem] items-center gap-2 border-b-2 pb-3 pt-1 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary " + (type === filter.value ? "border-primary font-medium text-primary" : "border-transparent text-zinc-500 hover:text-zinc-800")}>{filter.label}<span className="text-[10px] tabular-nums opacity-70">{filter.value === "All" ? baseDocuments.length : baseDocuments.filter((document) => document.type === filter.value).length}</span></button>)}</div>}
           <SalesDocuments documents={documents} page={page} onPageChange={setPage} onView={setSelectedDocument} />

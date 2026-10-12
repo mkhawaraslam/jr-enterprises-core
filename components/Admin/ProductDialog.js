@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LoaderCircle, Package, Pencil, Save, Trash2, X } from "lucide-react";
-import { emptyProduct, formatProductPrice, normalizeProduct, productLimits, validateProduct } from "../../utils/adminProduct";
+import { emptyProduct, formatProductPrice, normalizeProduct, productLimits, PRODUCT_UNITS, validateProduct } from "../../utils/adminProduct";
 import { productRequest } from "../../lib/products/browser";
 import PrototypeDialog from "./PrototypeDialog";
 
@@ -53,7 +53,7 @@ export default function ProductDialog({ selection, onClose, onChanged }) {
       const normalized = normalizeProduct(values);
       await productRequest("/api/admin/products" + (record ? "/" + record.id : ""), {
         method: record ? "PATCH" : "POST",
-        body: { name: normalized.name, price: Number(normalized.price), ...(record ? { revision: record.revision } : {}) },
+        body: { name: normalized.name, price: Number(normalized.price), unit: normalized.unit, ...(record ? { revision: record.revision } : {}) },
       });
       if (mounted.current) { onChanged(record ? "Product updated." : "Product created."); onClose(); }
     } catch (cause) {
@@ -85,7 +85,7 @@ export default function ProductDialog({ selection, onClose, onChanged }) {
         {((!record && selection?.id) || conflict) && <button type="button" disabled={pending} onClick={() => setReload((value) => value + 1)} className="mt-2 block min-h-[44px] rounded px-2 font-medium underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Reload product</button>}
       </div>}
       {!ready ? <div className="px-4 py-5 sm:px-6"><button type="button" onClick={close} className={secondaryClass}>Close</button></div> : editing ? <form onSubmit={save} noValidate aria-busy={pending}>
-        <div className="grid grid-cols-1 gap-5 px-4 py-5 sm:grid-cols-3 sm:px-6">
+        <div className="grid grid-cols-1 gap-5 px-4 py-5 sm:grid-cols-2 sm:px-6">
           <div className="min-w-0 sm:col-span-2">
             <label htmlFor="product-name" className="mb-2 block text-sm font-medium text-zinc-700">Name <span className="text-primary" aria-hidden="true">*</span></label>
             <input id="product-name" name="name" type="text" autoComplete="off" autoFocus={mode === "create"} maxLength={productLimits.name} required disabled={pending} value={values.name} onChange={(event) => changeField("name", event.target.value)} aria-invalid={Boolean(fields.name)} aria-describedby={fields.name ? "product-name-error" : undefined} className={inputClass + " " + (fields.name ? "border-primary" : "border-zinc-200")} />
@@ -95,6 +95,13 @@ export default function ProductDialog({ selection, onClose, onChanged }) {
             <label htmlFor="product-price" className="mb-2 block text-sm font-medium text-zinc-700">Price (PKR) <span className="text-primary" aria-hidden="true">*</span></label>
             <input id="product-price" name="price" type="text" inputMode="numeric" pattern="[0-9]*" autoComplete="off" maxLength={productLimits.price} required disabled={pending} value={values.price} onChange={(event) => changeField("price", event.target.value)} aria-invalid={Boolean(fields.price)} aria-describedby={fields.price ? "product-price-error" : undefined} className={inputClass + " tabular-nums " + (fields.price ? "border-primary" : "border-zinc-200")} />
             {fields.price && <p id="product-price-error" className="mt-1.5 text-xs text-primary">{fields.price}</p>}
+          </div>
+          <div className="min-w-0">
+            <label htmlFor="product-unit" className="mb-2 block text-sm font-medium text-zinc-700">Unit <span className="text-primary" aria-hidden="true">*</span></label>
+            <select id="product-unit" name="unit" required disabled={pending} value={values.unit} onChange={(event) => changeField("unit", event.target.value)} aria-invalid={Boolean(fields.unit)} aria-describedby={fields.unit ? "product-unit-error" : undefined} className={inputClass + " " + (fields.unit ? "border-primary" : "border-zinc-200")}>
+              {PRODUCT_UNITS.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+            </select>
+            {fields.unit && <p id="product-unit-error" className="mt-1.5 text-xs text-primary">{fields.unit}</p>}
           </div>
         </div>
         <div className={footerClass}>
@@ -107,7 +114,7 @@ export default function ProductDialog({ selection, onClose, onChanged }) {
       </> : record && <>
         <div className="space-y-6 px-4 py-5 sm:px-6">
           <div className="flex min-w-0 items-start gap-3"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary-light text-primary"><Package className="h-5 w-5" aria-hidden="true" /></span><h3 className="min-w-0 break-words text-lg font-medium leading-7">{record.name}</h3></div>
-          <dl><dt className="text-xs text-zinc-500">Price</dt><dd className="mt-2 break-words text-xl font-medium tabular-nums text-zinc-900">{formatProductPrice(record.price)}</dd></dl>
+          <dl className="grid grid-cols-2 gap-4"><div><dt className="text-xs text-zinc-500">Price</dt><dd className="mt-2 break-words text-xl font-medium tabular-nums text-zinc-900">{formatProductPrice(record.price)}</dd></div><div><dt className="text-xs text-zinc-500">Unit</dt><dd className="mt-2 text-base font-medium text-zinc-900">{record.unit}</dd></div></dl>
         </div>
         <div className={footerClass}><button type="button" onClick={() => changeMode("delete")} className={secondaryClass + " text-primary"}><Trash2 className="h-4 w-4 shrink-0" aria-hidden="true" />Delete</button><button type="button" onClick={() => changeMode("edit")} className={primaryClass}><Pencil className="h-4 w-4 shrink-0" aria-hidden="true" />Edit</button></div>
       </>}

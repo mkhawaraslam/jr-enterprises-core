@@ -6,9 +6,9 @@ export const businessTemplates = [
 ];
 
 export const documentTypes = [
-  { id: "quotation", name: "Quotation", reference: "QT-DEMO-001", recipient: "Quote to" },
-  { id: "invoice", name: "Invoice", reference: "INV-DEMO-001", recipient: "Bill to" },
-  { id: "delivery-challan", name: "Delivery challan", reference: "DC-DEMO-001", recipient: "Deliver to" },
+  { id: "quotation", name: "Quotation", reference: "3525", recipient: "Quote to" },
+  { id: "invoice", name: "Invoice", reference: "3525", recipient: "Bill to" },
+  { id: "delivery-challan", name: "Delivery challan", reference: "3525", recipient: "Deliver to" },
 ];
 
 export const defaultBillingPreference = { billing_mode: "custom", template_id: "industrial", template_version: 1 };

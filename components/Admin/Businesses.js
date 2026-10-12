@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Building2, ChevronLeft, ChevronRight, Eye, FileText, LoaderCircle, Mail, MapPin, Pencil, Phone, Plus, RefreshCw, Search, Trash2, X } from "lucide-react";
 import { BUSINESS_PAGE_SIZE } from "../../utils/adminBusiness";
 import { findBusinessTemplate } from "../../utils/businessTemplates";
@@ -8,7 +9,7 @@ import BusinessDialog from "./BusinessDialog";
 const toolClass = "flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-40";
 
 function BusinessTools({ record, onSelect }) {
-  return <div className="flex shrink-0 items-center gap-1">{[{ mode: "view", label: "View", Icon: Eye }, { mode: "edit", label: "Edit", Icon: Pencil }, { mode: "delete", label: record.deletion_pending ? "Retry deletion of" : "Delete", Icon: Trash2 }].map(({ mode, label, Icon }) => <button key={mode} type="button" disabled={mode === "edit" && record.deletion_pending} onClick={() => onSelect({ id: record.id, mode })} className={toolClass + (mode === "delete" ? " text-primary" : "")} title={label + " business"} aria-label={label + " " + record.name}><Icon className="h-[18px] w-[18px]" aria-hidden="true" /></button>)}</div>;
+  return <div className="flex shrink-0 flex-wrap items-center gap-1">{record.billing_mode === "custom" && !record.deletion_pending && <Link href={"/admin/businesses/" + record.id + "/document-layout"}><a className={toolClass} title="Configure document layout" aria-label={"Configure document layout for " + record.name}><FileText className="h-[18px] w-[18px]" aria-hidden="true" /></a></Link>}{[{ mode: "view", label: "View", Icon: Eye }, { mode: "edit", label: "Edit", Icon: Pencil }, { mode: "delete", label: record.deletion_pending ? "Retry deletion of" : "Delete", Icon: Trash2 }].map(({ mode, label, Icon }) => <button key={mode} type="button" disabled={mode === "edit" && record.deletion_pending} onClick={() => onSelect({ id: record.id, mode })} className={toolClass + (mode === "delete" ? " text-primary" : "")} title={label + " business"} aria-label={label + " " + record.name}><Icon className="h-[18px] w-[18px]" aria-hidden="true" /></button>)}</div>;
 }
 
 function BusinessIdentity({ record }) {

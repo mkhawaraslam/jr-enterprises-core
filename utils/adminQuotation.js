@@ -34,13 +34,13 @@ export function quotationSubtotal(items) {
   return items.reduce((total, item) => total + Number(item.quantity || 0) * Number(item.price || 0), 0);
 }
 
-export function validateQuotation(values) {
+export function validateQuotation(values, { validity = true, pricing = true } = {}) {
   const quote = normalizeQuotation(values);
   const errors = {};
   if (!isQuotationId(quote.business_id) || !Number.isSafeInteger(quote.business_revision) || quote.business_revision < 1) errors.business_id = "Choose a business.";
   if (!isQuotationId(quote.customer_id) || !Number.isSafeInteger(quote.customer_revision) || quote.customer_revision < 1) errors.customer_id = "Choose a customer.";
-  if (!validQuotationDate(quote.date)) errors.date = "Enter a valid quotation date.";
-  if (!validQuotationDate(quote.valid_until) || quote.valid_until < quote.date) errors.valid_until = "Validity must be on or after the quotation date.";
+  if (!validQuotationDate(quote.date)) errors.date = "Enter a valid date.";
+  if (validity && (!validQuotationDate(quote.valid_until) || quote.valid_until < quote.date)) errors.valid_until = "Validity must be on or after the quotation date.";
   if (quote.subject.length > 500) errors.subject = "Use 500 characters or fewer.";
   if (quote.notes.length > 5000) errors.notes = "Use 5,000 characters or fewer.";
   if (!quote.items.length || quote.items.length > MAX_QUOTATION_ITEMS) errors.items = `Add between 1 and ${MAX_QUOTATION_ITEMS} products.`;
@@ -48,10 +48,10 @@ export function validateQuotation(values) {
     if (!isQuotationId(item.product_id) || !Number.isSafeInteger(item.revision) || item.revision < 1) errors[`items.${index}.product_id`] = "Choose a current product.";
     if (!item.description || item.description.length > 500) errors[`items.${index}.description`] = "Enter a description of 500 characters or fewer.";
     if (!/^\d+$/.test(item.quantity) || Number(item.quantity) < 1 || Number(item.quantity) > 1000000) errors[`items.${index}.quantity`] = "Use a whole-number quantity from 1 to 1,000,000.";
-    if (!/^\d+$/.test(item.price) || Number(item.price) > MAX_PRODUCT_PRICE) errors[`items.${index}.price`] = "Use a whole-number price from 0 to 2,147,483,647.";
+    if (pricing && (!/^\d+$/.test(item.price) || Number(item.price) > MAX_PRODUCT_PRICE)) errors[`items.${index}.price`] = "Use a whole-number price from 0 to 2,147,483,647.";
   }
   const total = quotationSubtotal(quote.items);
-  if (!Number.isSafeInteger(total) || total > MAX_QUOTATION_TOTAL) errors.items = "The quotation total exceeds PKR 999,999,999,999.";
+  if (pricing && (!Number.isSafeInteger(total) || total > MAX_QUOTATION_TOTAL)) errors.items = "The document total exceeds PKR 999,999,999,999.";
   return errors;
 }
 

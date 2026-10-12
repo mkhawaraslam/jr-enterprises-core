@@ -13,6 +13,8 @@ export async function getServerSideProps(context) {
   if (view === "customers") return { redirect: { destination: "/admin/customers", permanent: false } };
   if (view === "products") return { redirect: { destination: "/admin/products", permanent: false } };
   if (view === "quotations") return { redirect: { destination: "/admin/quotations", permanent: false } };
+  if (view === "invoices") return { redirect: { destination: "/admin/invoices", permanent: false } };
+  if (view === "delivery") return { redirect: { destination: "/admin/delivery-challans", permanent: false } };
   const initialModule = ["business", "customers", "products", "quotations", "invoices", "delivery"].includes(view) ? view : "overview";
   return { props: { user: access.user, initialModule } };
 }
