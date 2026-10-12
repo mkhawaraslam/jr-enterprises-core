@@ -19,6 +19,20 @@ export const letterheadReferenceLayout = {
   footer: "", pageNumbers: true,
 };
 
+export const jrBusinessWebsite = "www.jrenterprisespk.com";
+const websitePattern = /^(https?:\/\/)?(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}(?:\/[^\s]*)?$/i;
+
+export function validateLetterheadWebsite(value) {
+  return typeof value === "string" && value.length <= 100 && !/[\x00-\x1f\x7f]/.test(value) && (value === "" || websitePattern.test(value));
+}
+
+// Keep previously approved optional headers readable after removing their editor controls.
+function validateLetterhead(value) {
+  return value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 2
+    && Object.keys(value).every((key) => ["namePosition", "website"].includes(key))
+    && ["below-logo", "beside-logo"].includes(value.namePosition) && validateLetterheadWebsite(value.website);
+}
+
 const choices = {
   header: ["split", "centered", "compact"], titleAlign: ["left", "center", "right"],
   recipientSide: ["left", "right"], tableHeader: ["filled", "line"],
@@ -30,8 +44,9 @@ const ranges = { titleSize: [18, 32], margin: [28, 56], logoWidth: [70, 170], fo
 
 export function validateBusinessLayout(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
-  if (value.schema === 2) return Object.keys(value).length === Object.keys(supplierReferenceLayout).length
-    && Object.keys(value).every((key) => Object.prototype.hasOwnProperty.call(supplierReferenceLayout, key))
+  if (value.schema === 2) return Object.keys(value).length === Object.keys(supplierReferenceLayout).length + (Object.prototype.hasOwnProperty.call(value, "letterhead") ? 1 : 0)
+    && Object.keys(value).every((key) => Object.prototype.hasOwnProperty.call(supplierReferenceLayout, key) || key === "letterhead")
+    && (!Object.prototype.hasOwnProperty.call(value, "letterhead") || value.reference === "letterhead-grid-v1" && validateLetterhead(value.letterhead))
     && ["supplier-grid-v1", "letterhead-grid-v1"].includes(value.reference) && choices.density.includes(value.density)
     && Object.entries({ margin: [26, 40], logoWidth: [70, 110], titleSize: [18, 24], fontSize: [9, 12] })
       .every(([key, [min, max]]) => Number.isInteger(value[key]) && value[key] >= min && value[key] <= max)

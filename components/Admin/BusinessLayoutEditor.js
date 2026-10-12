@@ -60,7 +60,8 @@ export default function BusinessLayoutEditor({ businessId }) {
     return () => controller.abort();
   }, [endpoint, data?.business.revision]);
   useEffect(() => {
-    if (!data || !validateBusinessLayout(definition) || loading) return;
+    if (!data || loading) return;
+    if (!validateBusinessLayout(definition)) { setPreview(null); setPreviewError(""); setPreviewing(false); return; }
     const controller = new AbortController(); setPreview(null); setPreviewError(""); setPreviewing(true);
     const timer = setTimeout(() => {
       layoutFile(endpoint + "/preview", { definition, kind, revision: data.business.revision }, controller.signal)

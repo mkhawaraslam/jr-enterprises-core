@@ -1,5 +1,5 @@
 import { formatQuotationDate } from "./adminQuotation";
-import { validateBusinessLayout } from "./businessLayout";
+import { jrBusinessWebsite, validateBusinessLayout } from "./businessLayout";
 
 const number = (value) => new Intl.NumberFormat("en-PK", { maximumFractionDigits: 0 }).format(value);
 const grid = {
@@ -22,10 +22,10 @@ export function letterheadReferenceDocument(document, images, kind) {
     ...(document.customer_reference ? [field("Inquiry / PO:", document.customer_reference)] : []),
     ...(kind === "quotation" ? [{ text: "Valid until: " + formatQuotationDate(document.valid_until), color: accent }] : []),
     ...(kind === "invoice" && document.due_date ? [field("Due date:", formatQuotationDate(document.due_date))] : [])];
-  const customerDetails = [{ text: customer.company_name || customer.name, font: "Times", bold: true, fontSize: 16, margin: [0, 0, 0, 5] },
-    ...(address ? [{ text: "Address: " + address, margin: [0, 0, 0, 8] }] : []),
-    ...(customer.company_name ? [{ text: "Attn: " + customer.name, margin: [0, 0, 0, 5] }] : []),
-    ...[customer.phone, customer.email].filter(Boolean).map((text) => ({ text, margin: [0, 0, 0, 3] }))];
+  const customerDetails = [{ text: customer.company_name || customer.name, font: "Times", bold: true, fontSize: 16, margin: [0, 0, 0, 2] },
+    ...(address ? [{ text: "Address: " + address, margin: [0, 0, 0, 5] }] : []),
+    ...(customer.company_name ? [{ text: "Attn: " + customer.name, margin: [0, 0, 0, 3] }] : []),
+    ...[customer.phone, customer.email].filter(Boolean).map((text) => ({ text, margin: [0, 0, 0, 1] }))];
   const columnCount = priced ? 6 : 4; const customerSpan = priced ? 4 : 3;
   const blanks = (count) => Array.from({ length: count }, () => ({}));
   // Spanning the first row keeps the customer/metadata divider aligned with the item grid.
@@ -40,6 +40,9 @@ export function letterheadReferenceDocument(document, images, kind) {
       : [{ text: item.unit || "-", alignment: "center" }, { text: number(item.quantity), alignment: "center" }]),
   ]);
   const tableWidths = priced ? [38, "*", 48, 44, 80, 80] : [38, "*", 44, metadataWidth - 7.2];
+  // This identity supplies a known contact URL, not a reference-file mapping.
+  const isJrEnterprises = business.name.toLowerCase().replace(/[^a-z0-9]/g, "") === "jrenterprises";
+  const website = layout.letterhead?.website ?? (isJrEnterprises ? jrBusinessWebsite : "");
   const header = { columns: [
     { width: "*", columns: [{ width: layout.logoWidth, image: "logo", fit: [layout.logoWidth, 88] },
       { width: "*", text: business.name, fontSize: 28, bold: true, color: accent, margin: [0, 22, 0, 0] }], columnGap: 12 },
@@ -47,6 +50,7 @@ export function letterheadReferenceDocument(document, images, kind) {
       { text: business.address, margin: [0, 3, 0, 4] },
       ...[business.phone && "Call: " + business.phone, business.email && "Email: " + business.email, business.ntn && "NTN # " + business.ntn]
         .filter(Boolean).map((text) => ({ text, margin: [0, 0, 0, 4] })),
+      ...(website ? [{ text: website, fontSize: 10, margin: [0, 0, 0, 0] }] : []),
     ] },
   ], columnGap: 16, margin: [0, 0, 0, 16] };
   const banner = { columns: [{ width: "*", text: "" }, { width: metadataWidth, table: { widths: ["*"], body: [[{
@@ -70,6 +74,7 @@ export function letterheadReferenceDocument(document, images, kind) {
     info: { title: document.reference + " - " + business.name, author: business.name, subject: title + " for " + (customer.company_name || customer.name) },
     images, content: [header, banner,
       ...(document.subject ? [{ text: document.subject, fontSize: 9, margin: [0, 0, 0, 5] }] : []),
+      { text: "Customer:", font: "Times", bold: true, fontSize: 12, margin: [0, 0, 0, 1] },
       { table: { widths: tableWidths, body: rows, headerRows: 2, dontBreakRows: true,
         heights: (row) => row === 0 ? 76 : row === 1 ? 10 : { compact: 28, normal: 46, spacious: 64 }[layout.density] }, layout: grid },
       summary, { unbreakable: true, stack: [
