@@ -10,7 +10,7 @@ export default function LoginForm({ unavailable = false, accessDenied = false })
   const router = useRouter();
   const formRef = useRef(null);
   const submittingRef = useRef(false);
-  const [values, setValues] = useState({ email: "", password: "" });
+  const [values, setValues] = useState({ email: "test@gmail.com", password: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
