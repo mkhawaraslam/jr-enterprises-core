@@ -70,9 +70,9 @@ export function letterheadReferenceDocument(document, images, kind) {
   ] };
   const paymentInstructions = kind === "invoice" && isJrEnterprises ? [
     { text: "PAYMENT INSTRUCTIONS", bold: true, fontSize: 10, margin: [0, 0, 0, 5] },
-    { text: "Bank: Faysal Bank", margin: [0, 0, 0, 3] },
-    { text: "Account no: 0203007000004651", margin: [0, 0, 0, 3] },
-    { text: "Account title: J.R ENTERPRISES" },
+    { text: "Bank: UBL", margin: [0, 0, 0, 3] },
+    { text: "Account no: 1632394994329", margin: [0, 0, 0, 3] },
+    { text: "Account title: JR ENTERPRISES" },
   ] : null;
   return {
     pageSize: "LETTER", pageMargins: [layout.margin, 26, layout.margin, 42],
