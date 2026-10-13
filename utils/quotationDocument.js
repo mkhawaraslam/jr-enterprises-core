@@ -2,6 +2,7 @@ import { formatQuotationDate } from "./adminQuotation";
 import { isQuotationLayout } from "./quotationLayouts";
 import { salesDocumentType } from "./adminSalesDocument";
 import { validateBusinessLayout } from "./businessLayout";
+import { businessCeoHeading } from "./businessTemplates";
 import { supplierReferenceDocument } from "./supplierReferenceDocument";
 import { letterheadReferenceDocument } from "./letterheadReferenceDocument";
 
@@ -25,7 +26,7 @@ export function quotationDocumentDefinition(quote, images, kind = "quotation") {
   const ledger = custom ? custom.header === "compact" : quote.layout_id === "ledger";
   const minimal = custom ? custom.tableHeader === "line" : quote.layout_id === "minimal";
   const company = { stack: [{ image: "logo", fit: [custom?.logoWidth || 115, custom ? 72 : 62], margin: [0, 0, 0, 7] }, { text: b.name, bold: true, fontSize: 12, color: accent }] };
-  const contacts = { stack: [{ text: b.address }, { text: b.phone, margin: [0, custom ? 3 : 4, 0, 0] }, { text: b.email, margin: [0, custom ? 3 : 4, 0, 0] }, { text: "NTN: " + b.ntn, margin: [0, custom ? 3 : 4, 0, 0] }], color: muted, alignment: "right", fontSize: 9 };
+  const contacts = { stack: [{ text: businessCeoHeading, bold: true, margin: [0, 0, 0, 3] }, { text: b.address }, { text: b.phone, margin: [0, custom ? 3 : 4, 0, 0] }, { text: b.email, margin: [0, custom ? 3 : 4, 0, 0] }, { text: "NTN: " + b.ntn, margin: [0, custom ? 3 : 4, 0, 0] }], color: muted, alignment: "right", fontSize: 9 };
   const recipient = { stack: [
     ...(kind !== "quotation" ? [{ text: type.priced ? "BILL TO" : "DELIVER TO", bold: true, color: accent, fontSize: 9, margin: [0, 0, 0, 7] }] : []),
     ...[c.company_name, c.name, kind === "challan" && quote.delivery_address ? quote.delivery_address : c.address, c.phone, c.email].filter(Boolean).map((text, index) => ({ text, bold: index === 0, fontSize: index === 0 ? 12 : fontSize, margin: [0, 0, 0, 4] })),

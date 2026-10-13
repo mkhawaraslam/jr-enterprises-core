@@ -1,5 +1,5 @@
 import { Building2 } from "lucide-react";
-import { documentTypes, findBusinessTemplate } from "../../utils/businessTemplates";
+import { businessCeoHeading, documentTypes, findBusinessTemplate } from "../../utils/businessTemplates";
 
 const demoItems = [
   { code: "VAL-025", name: "Stainless steel ball valve, 25 mm", quantity: 4, unit: "pcs", rate: 8500 },
@@ -14,6 +14,7 @@ function CompanyIdentity({ business, compact = false }) {
     {business.logo?.url ? <img src={business.logo.url} alt={business.name ? business.name + " logo" : "Business logo"} width={128} height={56} className="h-14 w-28 shrink-0 object-contain object-left" /> : <div className="flex h-14 w-14 shrink-0 items-center justify-center border border-zinc-200"><Building2 className="h-7 w-7 text-zinc-400" aria-hidden="true" /></div>}
     <div className="min-w-0">
       <p className="break-words text-base font-semibold leading-6 text-zinc-900">{business.name || "Your business"}</p>
+      <p className="mt-1 break-words text-[11px] font-semibold leading-4 text-zinc-600">{businessCeoHeading}</p>
       <p className="mt-1 whitespace-pre-wrap break-words text-[11px] leading-4 text-zinc-500">{business.address || "Business address"}</p>
       <p className="mt-1 break-all text-[11px] leading-4 text-zinc-500">{business.email || "Business email"} | {business.phone || "Business phone"}</p>
       <p className="mt-1 break-words text-[11px] leading-4 text-zinc-600">NTN: {business.ntn || "Business NTN"}</p>

@@ -5,6 +5,8 @@ export const businessTemplates = [
   { id: "minimal", version: 1, name: "Minimal", accent: "zinc" },
 ];
 
+export const businessCeoHeading = "CEO JAVAID IQBAL";
+
 export const documentTypes = [
   { id: "quotation", name: "Quotation", reference: "3525", recipient: "Quote to" },
   { id: "invoice", name: "Invoice", reference: "3525", recipient: "Bill to" },

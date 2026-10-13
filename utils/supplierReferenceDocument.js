@@ -1,5 +1,6 @@
 import { formatQuotationDate } from "./adminQuotation";
 import { validateBusinessLayout } from "./businessLayout";
+import { businessCeoHeading } from "./businessTemplates";
 
 const number = (value) => new Intl.NumberFormat("en-PK", { maximumFractionDigits: 0 }).format(value);
 const ruled = {
@@ -31,6 +32,7 @@ export function supplierReferenceDocument(document, images, kind) {
     columns: [{ width: 100, image: "logo", fit: [layout.logoWidth, 66], alignment: "center" },
       { width: "*", alignment: "center", stack: [
         { text: business.name, font: "Roboto", bold: true, fontSize: 30, color: accent, margin: [0, 0, 0, 3] },
+        { text: businessCeoHeading, bold: true, fontSize: 11, margin: [0, 0, 0, 2] },
         { text: business.address, fontSize: 11, margin: [0, 0, 0, 2] },
         { text: [business.ntn && "NTN# " + business.ntn, business.phone && "Ph: " + business.phone,
           business.email && "E-mail: " + business.email].filter(Boolean).join(" , "), fontSize: 10.5 },

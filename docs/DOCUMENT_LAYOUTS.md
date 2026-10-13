@@ -18,6 +18,8 @@ The old single-file SHA-256 whitelist is removed. Existing issued documents stil
 
 The same approved style applies to all three document types, with their different content rules: quotations include validity and acceptance; invoices use item subtotals only; challans include quantities and receipt signatures, with no prices or totals. Preview records contain visibly marked demo customer/items and are never saved as issued documents.
 
+All document templates and template previews display `CEO JAVAID IQBAL` immediately above the business address. The heading is shared through `businessCeoHeading` in `utils/businessTemplates.js` and does not modify the stored address.
+
 Replacing the uploaded reference creates a new immutable storage path, automatically leaving the new file pending approval. The previous definition can be used as an editing starting point but is not silently activated for the replacement. Approval creates the next version for that business, and also increments its business revision so already-open create forms must reselect current data.
 
 This is a bounded layout-mapping editor, not an automatic PDF/image-to-template converter or a freeform coordinate editor. Unusual reference artwork, arbitrary overlapping fields or radically different page structures may need a new renderer capability. Do not approve a preview that does not match the intended design. No OCR, external AI upload or execution of uploaded documents is involved.

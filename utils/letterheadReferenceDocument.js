@@ -1,5 +1,6 @@
 import { formatQuotationDate } from "./adminQuotation";
 import { jrBusinessWebsite, validateBusinessLayout } from "./businessLayout";
+import { businessCeoHeading } from "./businessTemplates";
 
 const number = (value) => new Intl.NumberFormat("en-PK", { maximumFractionDigits: 0 }).format(value);
 const grid = {
@@ -47,6 +48,7 @@ export function letterheadReferenceDocument(document, images, kind) {
     { width: "*", columns: [{ width: layout.logoWidth, image: "logo", fit: [layout.logoWidth, 88] },
       { width: "*", text: business.name, fontSize: 28, bold: true, color: accent, margin: [0, 22, 0, 0] }], columnGap: 12 },
     { width: metadataWidth, alignment: "center", font: "Times", fontSize: 11, stack: [
+      { text: businessCeoHeading, bold: true, margin: [0, 0, 0, 2] },
       { text: business.address, margin: [0, 3, 0, 4] },
       ...[business.phone && "Call: " + business.phone, business.email && "Email: " + business.email, business.ntn && "NTN # " + business.ntn]
         .filter(Boolean).map((text) => ({ text, margin: [0, 0, 0, 4] })),
