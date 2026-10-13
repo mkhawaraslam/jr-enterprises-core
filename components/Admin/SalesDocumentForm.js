@@ -14,7 +14,7 @@ const tool = "flex h-11 w-11 shrink-0 items-center justify-center rounded-md tex
 export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
   const type = salesDocumentType(kind); const api = documentApi(kind); const router = useRouter();
   const [business, setBusiness] = useState(null); const [customer, setCustomer] = useState(null);
-  const [values, setValues] = useState(() => ({ date: quotationToday(), due_date: "", customer_reference: "", delivery_address: "", subject: "", notes: "", items: [] }));
+  const [values, setValues] = useState(() => ({ date: quotationToday(), delivery_address: "", items: [] }));
   const [picker, setPicker] = useState(null); const [businessLoading, setBusinessLoading] = useState(false);
   const [pending, setPending] = useState(false); const [error, setError] = useState(""); const [fields, setFields] = useState({});
   const busy = useRef(false); const request = useRef(null); const businessSelection = useRef(0); const mounted = useRef(true);
@@ -69,7 +69,7 @@ export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
   const attributes = (key) => ({ id: "document-" + key, "aria-invalid": Boolean(fields[key]), "aria-describedby": fields[key] ? "document-" + key + "-error" : undefined });
   const textField = (key, label, { date = false, rows = 0, maxLength, required = false } = {}) => <div className="min-w-0">
     <label htmlFor={"document-" + key} className="mb-2 block text-sm font-medium text-zinc-700">{label}{required && <span className="text-primary" aria-hidden="true"> *</span>}</label>
-    {rows ? <textarea {...attributes(key)} rows={rows} maxLength={maxLength} value={values[key]} onChange={(event) => change(key, event.target.value)} className={input + " resize-y"} /> : <input {...attributes(key)} type={date ? "date" : "text"} min={date ? key === "due_date" ? values.date || "2000-01-01" : "2000-01-01" : undefined} max={date ? "2099-12-31" : undefined} maxLength={maxLength} required={required} value={values[key]} onChange={(event) => change(key, event.target.value)} className={input} />}
+    {rows ? <textarea {...attributes(key)} rows={rows} maxLength={maxLength} value={values[key]} onChange={(event) => change(key, event.target.value)} className={input + " resize-y"} /> : <input {...attributes(key)} type={date ? "date" : "text"} min={date ? "2000-01-01" : undefined} max={date ? "2099-12-31" : undefined} maxLength={maxLength} required={required} value={values[key]} onChange={(event) => change(key, event.target.value)} className={input} />}
     {errorText(key)}
   </div>;
   const pickerButton = (directory, record, Icon) => <div className="min-w-0">
@@ -88,12 +88,9 @@ export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
       <div className="grid min-w-0 gap-5 sm:grid-cols-2">
         {pickerButton("business", business, Building2)}{pickerButton("customer", customer, Users)}
         {textField("date", "Date", { date: true, required: true })}
-        {type.priced && textField("due_date", "Due date", { date: true })}
-        {textField("customer_reference", "Customer / PO reference", { maxLength: 100 })}
       </div>
       {customer && <p className="break-words text-sm leading-6 text-zinc-500">{customer.address && <span className="block whitespace-pre-wrap">{customer.address}</span>}<span className="block break-all">{[customer.phone, customer.email].filter(Boolean).join(" | ")}</span></p>}
       {!type.priced && textField("delivery_address", "Delivery address", { rows: 3, maxLength: 2000 })}
-      {textField("subject", "Project / requirement", { rows: 2, maxLength: 500 })}
     </fieldset>
     <section aria-labelledby="document-items-heading" className="min-w-0 space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 id="document-items-heading" className="text-base font-medium">Items <span className="ml-2 text-xs font-normal tabular-nums text-zinc-400">{values.items.length}</span></h2><button id="document-items" type="button" disabled={pending || values.items.length >= MAX_QUOTATION_ITEMS} onClick={() => setPicker("product")} className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-zinc-200 bg-white-500 px-4 text-sm font-medium text-zinc-700 focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"><Plus className="h-4 w-4" aria-hidden="true" />Add products</button></div>{errorText("items")}
@@ -108,7 +105,6 @@ export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
         {type.priced && <div className="mt-4 flex flex-wrap justify-between gap-2 border-t border-zinc-100 pt-3 text-sm"><span className="text-zinc-500">Amount</span><strong className="min-w-0 break-all font-medium tabular-nums text-zinc-900">{Number.isSafeInteger(Number(item.quantity) * Number(item.price)) && /^\d+$/.test(item.quantity) && /^\d+$/.test(item.price) ? formatQuotationAmount(Number(item.quantity) * Number(item.price)) : "-"}</strong></div>}{errorText(`items.${index}.product_id`)}
       </li>)}</ol>}
     </section>
-    <fieldset disabled={pending} className="min-w-0 space-y-4 border-y border-zinc-200 bg-white-500 px-4 py-5 sm:px-6"><legend className="sr-only">Notes and instructions</legend><h2 className="text-base font-medium">Notes and instructions</h2>{business?.special_notes && <details className="text-sm"><summary className="min-h-[44px] cursor-pointer rounded py-3 font-medium text-zinc-600 focus-visible:ring-2 focus-visible:ring-primary">Business notes</summary><p className="whitespace-pre-wrap break-words py-2 text-sm leading-6 text-zinc-500">{business.special_notes}</p></details>}{textField("notes", "Additional notes", { rows: 4, maxLength: 5000 })}</fieldset>
     <footer className="sticky bottom-0 z-20 grid grid-cols-1 gap-3 border-t border-zinc-200 bg-white-500 px-4 py-4 shadow-t sm:flex sm:items-center sm:justify-between sm:px-6"><div className="flex flex-wrap items-center justify-between gap-2 sm:block"><span className="text-xs text-zinc-500">{type.priced ? "Total" : "Total quantity"}</span><strong className="min-w-0 break-all text-lg font-medium tabular-nums sm:ml-3">{Number.isSafeInteger(total) && total >= 0 ? type.priced ? formatQuotationAmount(total) : total.toLocaleString("en-PK") : "-"}</strong></div><button type="submit" disabled={pending || !canSave} className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50">{pending ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Save className="h-4 w-4" aria-hidden="true" />}{pending ? "Saving..." : "Save " + type.singular}</button></footer>
     {picker && <QuotationPicker key={picker} kind={picker} optionsUrl={api + "/options"} directoryParam="directory" request={salesDocumentRequest} showPrices={type.priced} onClose={() => setPicker(null)} existingProducts={values.items.map((item) => item.product_id)} onSelect={picker === "business" ? chooseBusiness : picker === "customer" ? chooseCustomer : addProducts} />}
   </form>;
