@@ -19,8 +19,10 @@ export function letterheadReferenceDocument(document, images, kind) {
   const accent = document.accent; const metadataWidth = 174;
   const field = (label, value) => ({ columns: [{ width: 70, text: label }, { width: "*", text: value, alignment: "right" }], columnGap: 3, margin: [0, 0, 0, 6] });
   const address = kind === "challan" && document.delivery_address ? document.delivery_address : customer.address;
-  const metadata = [field(title + " No:", document.reference), field("Date:", formatQuotationDate(document.date)),
-    ...(document.customer_reference ? [field("Inquiry / PO:", document.customer_reference)] : []),
+  const metadata = [field(title + " No:", document.reference),
+    ...(kind === "invoice" && document.customer_reference ? [field("PO No:", document.customer_reference)] : []),
+    field("Date:", formatQuotationDate(document.date)),
+    ...(kind !== "invoice" && document.customer_reference ? [field("Inquiry / PO:", document.customer_reference)] : []),
     ...(kind === "quotation" ? [{ text: "Valid until: " + formatQuotationDate(document.valid_until), color: accent }] : []),
     ...(kind === "invoice" && document.due_date ? [field("Due date:", formatQuotationDate(document.due_date))] : [])];
   const customerDetails = [{ text: customer.company_name || customer.name, font: "Times", bold: true, fontSize: 16, margin: [0, 0, 0, 2] },

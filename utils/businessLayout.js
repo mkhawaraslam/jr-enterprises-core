@@ -66,6 +66,7 @@ export function layoutPreviewDocument(business, definition, kind, accent) {
     customer_snapshot: { name: "Demo customer", company_name: "Sample Industries (demo)", phone: "0300 0000000", email: "demo@example.com", address: "Sample delivery address, Pakistan" },
     layout_id: "custom-mapped", layout_version: definition.schema === 2 ? 2 : 1, accent,
     reference: "3525",
+    ...(kind === "invoice" ? { customer_reference: "PO-2026-001" } : {}),
     date: "2026-01-15", valid_until: "2026-01-30", due_date: "2026-01-30",
     subject: "Sample industrial supply (preview only)", notes: "Demo data. This is not an issued document.",
     total: priced ? 27500 : null, quantity_total: 7,

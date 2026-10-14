@@ -31,10 +31,12 @@ export function quotationDocumentDefinition(quote, images, kind = "quotation") {
     ...(kind !== "quotation" ? [{ text: type.priced ? "BILL TO" : "DELIVER TO", bold: true, color: accent, fontSize: 9, margin: [0, 0, 0, 7] }] : []),
     ...[c.company_name, c.name, kind === "challan" && quote.delivery_address ? quote.delivery_address : c.address, c.phone, c.email].filter(Boolean).map((text, index) => ({ text, bold: index === 0, fontSize: index === 0 ? 12 : fontSize, margin: [0, 0, 0, 4] })),
   ], fontSize: 10 };
-  const metadata = { stack: [field(type.name + " No", quote.reference), field("Date", formatQuotationDate(quote.date)),
+  const metadata = { stack: [field(type.name + " No", quote.reference),
+    ...(kind === "invoice" && quote.customer_reference ? [field("PO No", quote.customer_reference)] : []),
+    field("Date", formatQuotationDate(quote.date)),
     ...(kind === "quotation" ? [field("Valid until", formatQuotationDate(quote.valid_until))] : []),
     ...(kind === "invoice" && quote.due_date ? [field("Due date", formatQuotationDate(quote.due_date))] : []),
-    ...(quote.customer_reference ? [field("Customer reference", quote.customer_reference)] : []),
+    ...(kind !== "invoice" && quote.customer_reference ? [field("Customer reference", quote.customer_reference)] : []),
   ], fontSize };
   const heading = { text: type.title, fontSize: custom?.titleSize || (classic ? 27 : 23), bold: true, color: accent, margin: custom ? [0, 18, 0, 18] : [0, 24, 0, 24], alignment: custom?.titleAlign || (classic ? "center" : "left") };
   const rule = () => ({ canvas: [{ type: "line", x1: 0, y1: 0, x2: pageWidth, y2: 0, lineWidth: minimal ? 1 : 2, lineColor: accent }], margin: custom ? [0, 12, 0, 12] : [0, 16, 0, 18] });

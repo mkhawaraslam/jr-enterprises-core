@@ -14,7 +14,7 @@ const tool = "flex h-11 w-11 shrink-0 items-center justify-center rounded-md tex
 export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
   const type = salesDocumentType(kind); const api = documentApi(kind); const router = useRouter();
   const [business, setBusiness] = useState(null); const [customer, setCustomer] = useState(null);
-  const [values, setValues] = useState(() => ({ date: quotationToday(), delivery_address: "", items: [] }));
+  const [values, setValues] = useState(() => ({ date: quotationToday(), customer_reference: "", delivery_address: "", items: [] }));
   const [picker, setPicker] = useState(null); const [businessLoading, setBusinessLoading] = useState(false);
   const [pending, setPending] = useState(false); const [error, setError] = useState(""); const [fields, setFields] = useState({});
   const busy = useRef(false); const request = useRef(null); const businessSelection = useRef(0); const mounted = useRef(true);
@@ -88,6 +88,7 @@ export default function SalesDocumentForm({ kind, initialBusinessId = "" }) {
       <div className="grid min-w-0 gap-5 sm:grid-cols-2">
         {pickerButton("business", business, Building2)}{pickerButton("customer", customer, Users)}
         {textField("date", "Date", { date: true, required: true })}
+        {kind === "invoice" && textField("customer_reference", "PO number", { maxLength: 100 })}
       </div>
       {customer && <p className="break-words text-sm leading-6 text-zinc-500">{customer.address && <span className="block whitespace-pre-wrap">{customer.address}</span>}<span className="block break-all">{[customer.phone, customer.email].filter(Boolean).join(" | ")}</span></p>}
       {!type.priced && textField("delivery_address", "Delivery address", { rows: 3, maxLength: 2000 })}

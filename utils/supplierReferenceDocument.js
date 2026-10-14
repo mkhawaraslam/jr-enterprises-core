@@ -24,10 +24,12 @@ export function supplierReferenceDocument(document, images, kind) {
   const details = [customer.company_name && { text: customer.company_name, fontSize: 16 },
     { text: customer.name, fontSize: customer.company_name ? fontSize : 16 },
     ...[address, customer.phone, customer.email].filter(Boolean).map((text) => ({ text, margin: [0, 3, 0, 0] }))].filter(Boolean);
-  const metadata = [[label + " No:", document.reference], [label + " Date:", formatQuotationDate(document.date)],
+  const metadata = [[label + " No:", document.reference],
+    ...(kind === "invoice" && document.customer_reference ? [["PO No:", document.customer_reference]] : []),
+    [label + " Date:", formatQuotationDate(document.date)],
     ...(kind === "quotation" ? [["Valid until:", formatQuotationDate(document.valid_until)]] : []),
     ...(kind === "invoice" && document.due_date ? [["Due date:", formatQuotationDate(document.due_date)]] : []),
-    ...(document.customer_reference ? [["Inquiry / PO No:", document.customer_reference]] : [])];
+    ...(kind !== "invoice" && document.customer_reference ? [["Inquiry / PO No:", document.customer_reference]] : [])];
   const header = {
     columns: [{ width: 100, image: "logo", fit: [layout.logoWidth, 66], alignment: "center" },
       { width: "*", alignment: "center", stack: [
